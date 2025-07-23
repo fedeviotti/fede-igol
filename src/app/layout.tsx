@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import Sidebar from '@/components/Sidebar';
 import Topbar from '@/components/Topbar';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -32,13 +32,15 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <body>
-            <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
               <Topbar />
-              <div style={{ flex: 1, display: 'flex' }}>
+              <Box sx={{ flex: 1, display: 'flex' }}>
                 <Sidebar />
-                <main style={{ flex: 1, padding: '1rem' }}>{children}</main>
-              </div>
-            </div>
+                <Box sx={{ flex: 1, padding: '1rem' }}>
+                  <main>{children}</main>
+                </Box>
+              </Box>
+            </Box>
           </body>
         </ThemeProvider>
       </AppRouterCacheProvider>
