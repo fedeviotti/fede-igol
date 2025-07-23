@@ -11,6 +11,17 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    plugins: {
+      prettier: require('eslint-plugin-prettier'),
+    },
+    rules: {
+      // Prettier formatter come regola ESLint
+      'prettier/prettier': 'error',
+      // Opzionale: limite di lunghezza della riga
+      'max-len': ['error', { code: 100 }],
+    },
+  },
 ];
 
 export default eslintConfig;
