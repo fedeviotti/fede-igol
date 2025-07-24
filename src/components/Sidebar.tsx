@@ -19,7 +19,7 @@ import NextLink from 'next/link';
 
 const items = [
   { label: 'Manuntenzioni', href: '/', icon: <BuildCircleOutlinedIcon /> },
-  { label: 'Dashboard', href: '/profilo', icon: <SpaceDashboardOutlinedIcon /> },
+  { label: 'Dashboard', href: '/dashboard', icon: <SpaceDashboardOutlinedIcon /> },
 ];
 
 export default function Sidebar() {

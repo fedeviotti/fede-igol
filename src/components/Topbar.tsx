@@ -1,8 +1,30 @@
-import { Box, Typography } from '@mui/material';
+'use client';
+import { signOut } from 'next-auth/react';
+import { Box, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Topbar() {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // Logica di logout
+    console.log('Logout clicked');
+    signOut({ callbackUrl: '/login' });
+    //handleClose();
+    // Potresti voler reindirizzare l'utente alla pagina di login dopo il logout
+    // window.location.href = '/login';
+  };
+
   return (
     <Box
       sx={{
@@ -22,7 +44,22 @@ export default function Topbar() {
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <AccountCircleOutlinedIcon />
+        <IconButton onClick={handleClick}>
+          <AccountCircleOutlinedIcon />
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          slotProps={{
+            list: {
+              'aria-labelledby': 'basic-button',
+            },
+          }}
+        >
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
         <Typography variant="body1" sx={{ color: 'text.primary' }}>
           Federico Viotti
         </Typography>
