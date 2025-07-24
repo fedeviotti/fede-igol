@@ -5,7 +5,6 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import { CssBaseline } from '@mui/material';
-import LayoutWrapper from '@/components/LayoutWrapper';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -30,7 +29,7 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
-            <LayoutWrapper>{children}</LayoutWrapper>
+            {children}
           </body>
         </ThemeProvider>
       </AppRouterCacheProvider>

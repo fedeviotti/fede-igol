@@ -1,3 +1,3 @@
 export default function DashboardPage() {
-  return <p>Contenuto protetto</p>;
+  return 'Contenuto protetto - Dashboard';
 }
