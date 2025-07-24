@@ -14,9 +14,17 @@ import BuildCircleOutlinedIcon from '@mui/icons-material/BuildCircleOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import NextLink from 'next/link';
+
+const items = [
+  { label: 'Manuntenzioni', href: '/', icon: <BuildCircleOutlinedIcon /> },
+  { label: 'Dashboard', href: '/profilo', icon: <SpaceDashboardOutlinedIcon /> },
+];
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
+  const pathname = usePathname();
 
   return (
     <>
@@ -25,8 +33,7 @@ export default function Sidebar() {
           width: isOpen ? 240 : 72,
           bgcolor: 'primary.dark',
           color: 'white',
-          padding: '0.5rem',
-          //height: '100%', // importante per occupare altezza rimanente
+          padding: '0.75rem',
           overflow: 'hidden',
           transition: 'width 0.3s',
           display: 'flex',
@@ -34,27 +41,63 @@ export default function Sidebar() {
           justifyContent: 'space-between',
         }}
       >
-        <List sx={{ display: 'flex', flexDirection: 'column' }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: 'white', fontSize: 'inherit' }}>
-                <BuildCircleOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Manutenzioni" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: 'white', fontSize: 'inherit' }}>
-                <SpaceDashboardOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
-          </ListItem>
+        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          {items.map((item) => (
+            <ListItem key={item.href} disablePadding>
+              <ListItemButton
+                component={NextLink}
+                href={item.href}
+                selected={pathname === item.href}
+                sx={{
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    borderRadius: '4px',
+                  },
+                  '&.Mui-selected:hover': {
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    borderRadius: '4px',
+                  },
+                  '&:hover': {
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    borderRadius: '4px',
+                  },
+                }}
+              >
+                <ListItemIcon sx={{ color: 'white', fontSize: 'inherit' }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
         <List sx={{ display: 'flex', flexDirection: 'column' }}>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              component={NextLink}
+              href="/settings"
+              selected={pathname === '/settings'}
+              sx={{
+                '&.Mui-selected': {
+                  backgroundColor: 'primary.main',
+                  color: 'white',
+                  borderRadius: '4px',
+                },
+                '&.Mui-selected:hover': {
+                  backgroundColor: 'primary.main',
+                  color: 'white',
+                  borderRadius: '4px',
+                },
+                '&:hover': {
+                  backgroundColor: 'primary.main',
+                  color: 'white',
+                  borderRadius: '4px',
+                },
+              }}
+            >
               <ListItemIcon sx={{ color: 'white', fontSize: 'inherit' }}>
                 <SettingsOutlinedIcon />
               </ListItemIcon>

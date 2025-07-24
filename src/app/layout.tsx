@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { Roboto } from 'next/font/google';
-import './globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
@@ -31,14 +30,12 @@ export default function RootLayout({
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <body>
-            <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-              <Topbar />
-              <Box sx={{ flex: 1, display: 'flex' }}>
-                <Sidebar />
-                <Box sx={{ flex: 1, padding: '1.5rem' }}>
-                  <main>{children}</main>
-                </Box>
+          <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+            <Topbar />
+            <Box sx={{ flex: 1, display: 'flex', minHeight: 0 }}>
+              <Sidebar />
+              <Box sx={{ flex: 1, padding: '1.5rem' }}>
+                <main>{children}</main>
               </Box>
             </Box>
           </body>
