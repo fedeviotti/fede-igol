@@ -3,13 +3,13 @@ import { signOut } from 'next-auth/react';
 import { Box, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 
 export default function Topbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -17,12 +17,7 @@ export default function Topbar() {
   };
 
   const handleLogout = () => {
-    // Logica di logout
-    console.log('Logout clicked');
-    signOut({ callbackUrl: '/login' });
-    //handleClose();
-    // Potresti voler reindirizzare l'utente alla pagina di login dopo il logout
-    // window.location.href = '/login';
+    signOut({ callbackUrl: '/' });
   };
 
   return (

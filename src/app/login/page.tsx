@@ -2,7 +2,7 @@
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { Box, Button, TextField, Typography, Paper } from '@mui/material';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -11,7 +11,7 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
       setError('Inserisci username e password');
