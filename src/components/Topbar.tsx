@@ -7,7 +7,7 @@ export default function Topbar() {
     <header>
       <Box
         sx={{
-          height: '60px',
+          height: '72px',
           bgcolor: 'grey.200',
           display: 'flex',
           alignItems: 'center',

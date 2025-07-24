@@ -36,7 +36,7 @@ export default function RootLayout({
               <Topbar />
               <Box sx={{ flex: 1, display: 'flex' }}>
                 <Sidebar />
-                <Box sx={{ flex: 1, padding: '1rem' }}>
+                <Box sx={{ flex: 1, padding: '1.5rem' }}>
                   <main>{children}</main>
                 </Box>
               </Box>
