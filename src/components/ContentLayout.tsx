@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, FC } from 'react';
+import { PropsWithChildren, FC } from 'react';
 import { Box, Typography } from '@mui/material';
 
 type Props = PropsWithChildren<{

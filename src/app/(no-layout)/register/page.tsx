@@ -36,7 +36,9 @@ export default function RegisterPage() {
         setError(data.message || 'Errore durante la registrazione');
       }
     } catch (err) {
-      setError('Errore di rete');
+      setError(
+        err instanceof Error ? `Errore di rete: ${err.message}` : 'Errore di rete sconosciuto'
+      );
     }
   };
 
