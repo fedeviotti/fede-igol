@@ -3,7 +3,6 @@ import { signOut } from 'next-auth/react';
 import { Box, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
