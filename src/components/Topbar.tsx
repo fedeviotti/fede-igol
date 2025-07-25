@@ -3,11 +3,14 @@ import { signOut } from 'next-auth/react';
 import { Box, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState, MouseEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Topbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -18,6 +21,10 @@ export default function Topbar() {
 
   const handleLogout = () => {
     signOut({ callbackUrl: '/' });
+  };
+
+  const handleRegister = () => {
+    router.push('/register');
   };
 
   return (
@@ -53,11 +60,10 @@ export default function Topbar() {
             },
           }}
         >
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem>Profilo</MenuItem>
+          <MenuItem onClick={handleLogout}>Esci</MenuItem>
+          <MenuItem onClick={handleRegister}>Registrati</MenuItem>
         </Menu>
-        <Typography variant="body1" sx={{ color: 'text.primary' }}>
-          Federico Viotti
-        </Typography>
       </Box>
     </Box>
   );
