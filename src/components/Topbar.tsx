@@ -18,12 +18,20 @@ export default function Topbar() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
     signOut({ callbackUrl: '/' });
   };
 
-  const handleRegister = () => {
+  const handleRegisterClick = () => {
     router.push('/register');
+  };
+
+  const handleProfileClick = () => {
+    router.push('/profile');
+  };
+
+  const handleLogoClick = () => {
+    router.push('/'); // Redirect to home page
   };
 
   return (
@@ -38,7 +46,10 @@ export default function Topbar() {
         borderBottom: '1px solid #ccc',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <Box
+        onClick={handleLogoClick}
+        sx={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
+      >
         <Image src="/eagle.png" alt="Eagle logo" width={50} height={50} priority />
         <Typography component="h1" variant="h4" sx={{ color: 'text.primary' }}>
           AIGOL
@@ -59,9 +70,9 @@ export default function Topbar() {
             },
           }}
         >
-          <MenuItem>Profilo</MenuItem>
-          <MenuItem onClick={handleLogout}>Esci</MenuItem>
-          <MenuItem onClick={handleRegister}>Registrati</MenuItem>
+          <MenuItem onClick={handleProfileClick}>Profilo</MenuItem>
+          <MenuItem onClick={handleLogoutClick}>Esci</MenuItem>
+          <MenuItem onClick={handleRegisterClick}>Registrati</MenuItem>
         </Menu>
       </Box>
     </Box>

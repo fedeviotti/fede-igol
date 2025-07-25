@@ -13,12 +13,14 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import BuildCircleOutlinedIcon from '@mui/icons-material/BuildCircleOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import CottageOutlinedIcon from '@mui/icons-material/CottageOutlined';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
 
 const items = [
-  { label: 'Manuntenzioni', href: '/', icon: <BuildCircleOutlinedIcon /> },
+  { label: 'Home', href: '/', icon: <CottageOutlinedIcon /> },
+  { label: 'Manutenzioni', href: '/maintenance', icon: <BuildCircleOutlinedIcon /> },
   { label: 'Dashboard', href: '/dashboard', icon: <SpaceDashboardOutlinedIcon /> },
 ];
 
