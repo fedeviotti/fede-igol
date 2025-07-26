@@ -17,7 +17,6 @@
     "@mui/material-nextjs": "^7.2.0",
     "@stackframe/stack": "^2.8.25",
     "next": "15.4.3",
-    "next-auth": "^4.24.11",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
