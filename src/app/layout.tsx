@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { StackProvider, StackTheme } from "@stackframe/stack";
-import { stackServerApp } from "../stack";
+import { StackProvider, StackTheme } from '@stackframe/stack';
+import { stackServerApp } from '../stack';
 import { ReactNode } from 'react';
 import { Roboto } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
@@ -30,9 +30,11 @@ export default function RootLayout({
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}><StackProvider app={stackServerApp}><StackTheme>
-            {children}
-          </StackTheme></StackProvider></body>
+          <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+            <StackProvider app={stackServerApp}>
+              <StackTheme>{children}</StackTheme>
+            </StackProvider>
+          </body>
         </ThemeProvider>
       </AppRouterCacheProvider>
     </html>

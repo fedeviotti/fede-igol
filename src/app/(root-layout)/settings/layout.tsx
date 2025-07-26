@@ -1,14 +1,13 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 import { ContentLayout } from '@/components/ContentLayout';
+import { stackServerApp } from '@/stack';
 
 export default async function SettingsLayout({ children }: { children: ReactNode }) {
-  const session = await getServerSession(authOptions);
+  const user = await stackServerApp.getUser();
 
-  if (!session) {
-    redirect('/login?callbackUrl=/settings');
+  if (!user) {
+    redirect('/handler/sign-in?callbackUrl=/settings');
   }
 
   return <ContentLayout title="Settings - Area riservata">{children}</ContentLayout>;
