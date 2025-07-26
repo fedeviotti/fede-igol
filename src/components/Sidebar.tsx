@@ -51,6 +51,7 @@ export default function Sidebar() {
                 href={item.href}
                 selected={pathname === item.href}
                 sx={{
+                  paddingX: '0.75rem',
                   '&.Mui-selected': {
                     backgroundColor: 'primary.main',
                     color: 'white',
