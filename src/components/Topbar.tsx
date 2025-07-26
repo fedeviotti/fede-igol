@@ -29,7 +29,7 @@ export default function Topbar() {
       >
         <Image src="/eagle.png" alt="Eagle logo" width={50} height={50} priority />
         <Typography component="h1" variant="h4" sx={{ color: 'text.primary' }}>
-          AIGOL
+          FEDE-IGOL
         </Typography>
       </Box>
       <UserButton />
