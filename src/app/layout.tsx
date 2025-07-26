@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { StackProvider, StackTheme } from '@stackframe/stack';
-import { stackServerApp } from '../stack';
+import { stackServerApp } from '@/stack';
 import { ReactNode } from 'react';
 import { Roboto } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
