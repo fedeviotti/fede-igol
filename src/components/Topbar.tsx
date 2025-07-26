@@ -1,34 +1,11 @@
 'use client';
-import { signOut } from 'next-auth/react';
-import { Box, Typography, IconButton, Menu, MenuItem } from '@mui/material';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
-import { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { UserButton } from '@stackframe/stack';
 
 export default function Topbar() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const router = useRouter();
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogoutClick = () => {
-    signOut({ callbackUrl: '/' });
-  };
-
-  const handleRegisterClick = () => {
-    router.push('/register');
-  };
-
-  const handleProfileClick = () => {
-    router.push('/profile');
-  };
 
   const handleLogoClick = () => {
     router.push('/'); // Redirect to home page
@@ -55,26 +32,7 @@ export default function Topbar() {
           AIGOL
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <IconButton onClick={handleClick}>
-          <AccountCircleOutlinedIcon />
-        </IconButton>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          slotProps={{
-            list: {
-              'aria-labelledby': 'basic-button',
-            },
-          }}
-        >
-          <MenuItem onClick={handleProfileClick}>Profilo</MenuItem>
-          <MenuItem onClick={handleLogoutClick}>Esci</MenuItem>
-          <MenuItem onClick={handleRegisterClick}>Registrati</MenuItem>
-        </Menu>
-      </Box>
+      <UserButton />
     </Box>
   );
 }
