@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { getVehicles } from '@/app/actions';
+import { getVehicles } from '@/app/(root-layout)/maintenance/actions';
 import { LinearProgress } from '@mui/material';
 import { VehiclesDatGrid } from '@/app/(root-layout)/maintenance/components/VehiclesDataGrid';
 
