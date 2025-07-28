@@ -65,8 +65,12 @@ export default function Sidebar() {
                 color: 'white',
               }}
             >
-              <ListItemIcon sx={{ color: 'white', fontSize: 'inherit' }}>
-                {isOpen ? <ArrowBackIosOutlinedIcon /> : <ArrowForwardIosOutlinedIcon />}
+              <ListItemIcon sx={{ ml: '5px', color: 'white', fontSize: '14px' }}>
+                {isOpen ? (
+                  <ArrowBackIosOutlinedIcon sx={{ fontSize: 'inherit' }} />
+                ) : (
+                  <ArrowForwardIosOutlinedIcon sx={{ fontSize: 'inherit' }} />
+                )}
               </ListItemIcon>
             </ListItemButton>
           </ListItem>
