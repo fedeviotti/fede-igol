@@ -1,12 +1,13 @@
 'use client';
 import {
   Box,
-  IconButton,
+  Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Toolbar,
 } from '@mui/material';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -24,26 +25,51 @@ const items = [
   { label: 'Dashboard', href: '/dashboard', icon: <SpaceDashboardOutlinedIcon /> },
 ];
 
+const drawerWidthOpen = 240;
+const drawerWidthClose = 57;
+
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
 
   return (
-    <>
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: isOpen ? drawerWidthOpen : drawerWidthClose,
+        transition: 'width 0.3s',
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          transition: 'width 0.3s',
+          width: isOpen ? drawerWidthOpen : drawerWidthClose,
+          boxSizing: 'border-box',
+        },
+      }}
+    >
+      <Toolbar />
       <Box
         sx={{
-          width: isOpen ? 240 : 72,
-          bgcolor: 'primary.dark',
-          color: 'white',
-          padding: '0.75rem',
-          overflow: 'hidden',
-          transition: 'width 0.3s',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          overflow: 'auto',
+          bgcolor: 'primary.dark',
+          height: '100%',
         }}
       >
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => setIsOpen((prev) => !prev)}
+              sx={{
+                color: 'white',
+              }}
+            >
+              <ListItemIcon sx={{ color: 'white', fontSize: 'inherit' }}>
+                {isOpen ? <ArrowBackIosOutlinedIcon /> : <ArrowForwardIosOutlinedIcon />}
+              </ListItemIcon>
+            </ListItemButton>
+          </ListItem>
           {items.map((item) => (
             <ListItem key={item.href} disablePadding>
               <ListItemButton
@@ -51,21 +77,18 @@ export default function Sidebar() {
                 href={item.href}
                 selected={pathname === item.href}
                 sx={{
-                  paddingX: '0.75rem',
+                  color: 'white',
                   '&.Mui-selected': {
                     backgroundColor: 'primary.main',
                     color: 'white',
-                    borderRadius: '4px',
                   },
                   '&.Mui-selected:hover': {
                     backgroundColor: 'primary.main',
                     color: 'white',
-                    borderRadius: '4px',
                   },
                   '&:hover': {
                     backgroundColor: 'primary.main',
                     color: 'white',
-                    borderRadius: '4px',
                   },
                 }}
               >
@@ -84,20 +107,18 @@ export default function Sidebar() {
               href="/settings"
               selected={pathname === '/settings'}
               sx={{
+                color: 'white',
                 '&.Mui-selected': {
                   backgroundColor: 'primary.main',
                   color: 'white',
-                  borderRadius: '4px',
                 },
                 '&.Mui-selected:hover': {
                   backgroundColor: 'primary.main',
                   color: 'white',
-                  borderRadius: '4px',
                 },
                 '&:hover': {
                   backgroundColor: 'primary.main',
                   color: 'white',
-                  borderRadius: '4px',
                 },
               }}
             >
@@ -109,27 +130,6 @@ export default function Sidebar() {
           </ListItem>
         </List>
       </Box>
-      <IconButton
-        onClick={() => setIsOpen((prev) => !prev)}
-        sx={{
-          fontSize: '.8rem',
-          position: 'absolute',
-          padding: '4px',
-          top: 98,
-          left: isOpen ? 229 : 61,
-          zIndex: 1300,
-          transition: 'left 0.3s',
-          bgcolor: 'primary.main',
-          color: 'white',
-          '&:hover': { bgcolor: 'primary.light' },
-        }}
-      >
-        {isOpen ? (
-          <ArrowBackIosOutlinedIcon fontSize="inherit" />
-        ) : (
-          <ArrowForwardIosOutlinedIcon fontSize="inherit" />
-        )}
-      </IconButton>
-    </>
+    </Drawer>
   );
 }

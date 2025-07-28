@@ -9,8 +9,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <Topbar />
       <Box sx={{ flex: 1, display: 'flex', minHeight: 0 }}>
         <Sidebar />
-        <Box sx={{ flex: 1, padding: '1.5rem' }}>
-          <main>{children}</main>
+        <Box sx={{ flex: 1 }}>
+          <Box sx={{ height: '64px' }}></Box>
+          <Box sx={{ padding: '1.5rem' }}>
+            <main>{children}</main>
+          </Box>
         </Box>
       </Box>
     </>

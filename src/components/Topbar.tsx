@@ -1,5 +1,5 @@
 'use client';
-import { Box, Typography } from '@mui/material';
+import { AppBar, Box, Typography, Toolbar } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { UserButton } from '@stackframe/stack';
@@ -12,27 +12,25 @@ export default function Topbar() {
   };
 
   return (
-    <Box
+    <AppBar
+      position="fixed"
       sx={{
-        height: '72px',
+        zIndex: (theme) => theme.zIndex.drawer + 1,
         bgcolor: 'grey.200',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 1rem',
-        borderBottom: '1px solid #ccc',
       }}
     >
-      <Box
-        onClick={handleLogoClick}
-        sx={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
-      >
-        <Image src="/eagle.png" alt="Eagle logo" width={50} height={50} priority />
-        <Typography component="h1" variant="h4" sx={{ color: 'text.primary' }}>
-          FEDE-IGOL
-        </Typography>
-      </Box>
-      <UserButton />
-    </Box>
+      <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box
+          onClick={handleLogoClick}
+          sx={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
+        >
+          <Image src="/eagle.png" alt="Eagle logo" width={50} height={50} priority />
+          <Typography component="h1" variant="h4" sx={{ color: 'text.primary' }}>
+            FEDE-IGOL
+          </Typography>
+        </Box>
+        <UserButton />
+      </Toolbar>
+    </AppBar>
   );
 }
