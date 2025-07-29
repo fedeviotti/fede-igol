@@ -15,9 +15,9 @@ import BuildCircleOutlinedIcon from '@mui/icons-material/BuildCircleOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import CottageOutlinedIcon from '@mui/icons-material/CottageOutlined';
-import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
+import { Dispatch, SetStateAction } from 'react';
 
 const items = [
   { label: 'Home', href: '/', icon: <CottageOutlinedIcon /> },
@@ -25,11 +25,15 @@ const items = [
   { label: 'Dashboard', href: '/dashboard', icon: <SpaceDashboardOutlinedIcon /> },
 ];
 
-const drawerWidthOpen = 240;
-const drawerWidthClose = 57;
+export const drawerWidthOpen = '240px';
+export const drawerWidthClose = '57px';
 
-export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+type Props = {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Sidebar({ isOpen, setIsOpen }: Props) {
   const pathname = usePathname();
 
   return (

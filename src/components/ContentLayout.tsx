@@ -7,9 +7,9 @@ type Props = PropsWithChildren<{
 
 export const ContentLayout: FC<Props> = ({ children, title }) => {
   return (
-    <>
+    <Box className="flex flex-col gap-4 h-full">
       <Typography variant="h4">{title}</Typography>
-      <Box sx={{ py: 2 }}>{children}</Box>
-    </>
+      <Box className="h-[calc(100%-2rem)]">{children}</Box>
+    </Box>
   );
 };

@@ -7,7 +7,9 @@ import { fetchWithDrizzle } from '@/db/db';
 import { Vehicle } from '@/app/types';
 import { asc, eq } from 'drizzle-orm';
 
-export async function insertVehicle(vehicle: Vehicle) {
+type InsertVehicleProps = Pick<Vehicle, 'name' | 'type'>;
+
+export async function insertVehicle(vehicle: InsertVehicleProps) {
   await fetchWithDrizzle(async (db, { userId }) => {
     return db.insert(schema.vehiclesTable).values({
       name: vehicle.name,
