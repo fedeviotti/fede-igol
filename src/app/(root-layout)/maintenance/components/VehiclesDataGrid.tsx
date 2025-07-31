@@ -4,8 +4,7 @@ import { FC } from 'react';
 import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
 import PedalBikeOutlinedIcon from '@mui/icons-material/PedalBikeOutlined';
 import DirectionsBikeOutlinedIcon from '@mui/icons-material/DirectionsBikeOutlined';
-import { Vehicle } from '@/app/types';
-import { cn } from '@stackframe/stack-ui';
+import { User, Vehicle } from '@/app/types';
 
 type Props = {
   vehicles: Vehicle[];
@@ -36,9 +35,8 @@ export const VehiclesDatGrid: FC<Props> = ({ vehicles }) => {
       field: 'user',
       headerName: 'Proprietario',
       width: 200,
-      valueGetter: (value: { id: string; name: string | null; email: string | null }) => {
-        console.log('AAA', value);
-        return value.name || value.email || 'N/A';
+      valueGetter: (value: Partial<User>) => {
+        return value?.name || value?.email || 'N/A';
       },
     },
   ];
