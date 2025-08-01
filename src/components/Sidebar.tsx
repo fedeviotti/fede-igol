@@ -56,7 +56,7 @@ export default function Sidebar({ isOpen, setIsOpen }: Props) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          overflow: 'auto',
+          overflow: 'hidden',
           bgcolor: 'primary.dark',
           height: '100%',
         }}

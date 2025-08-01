@@ -15,11 +15,18 @@ export default function Topbar() {
     <AppBar
       position="fixed"
       sx={{
+        color: 'text.primary',
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        bgcolor: 'grey.200',
+        bgcolor: 'grey.300',
       }}
     >
-      <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <Box
           onClick={handleLogoClick}
           sx={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
