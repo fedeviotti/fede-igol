@@ -24,7 +24,7 @@ export async function insertVehicle(vehicle: InsertVehicleProps) {
 }
 
 export async function getVehicles() {
-  return fetchWithDrizzle(async (db) => {
+  return fetchWithDrizzle(async (db, { userId }) => {
     return db
       .select({
         id: schema.vehiclesTable.id,
@@ -39,6 +39,7 @@ export async function getVehicles() {
       })
       .from(schema.vehiclesTable)
       .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
+      .where(eq(schema.vehiclesTable.userId, userId))
       .orderBy(asc(schema.vehiclesTable.createdAt));
   });
 }
