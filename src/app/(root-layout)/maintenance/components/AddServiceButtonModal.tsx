@@ -1,6 +1,6 @@
 'use client';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import { insertService } from '@/app/(root-layout)/maintenance/actions';
 
 const modalStyle = {
@@ -16,17 +16,17 @@ const modalStyle = {
 };
 
 type Props = {
-  vehicleId: number;
+  vehicleId?: number;
 };
 
 export default function AddServiceButtonModal({ vehicleId }: Props) {
-  // TODO: deve essere ancora implementato
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     expiredAt: '',
+    selectedVehicleId: vehicleId,
   });
 
   const handleChange = (field: keyof typeof formData) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +41,18 @@ export default function AddServiceButtonModal({ vehicleId }: Props) {
       description: formData.description,
       price: parseFloat(formData.price),
       expiredAt: formData.expiredAt,
-      vehicleId,
+      vehicleId: formData.selectedVehicleId || 0,
     });
     setOpen(false);
   };
+
+  // recupera veicoli dal db (getVehicles) ma devi creare rotta API
+  // per fare chiamata da componente client
+  const userVehicles = [
+    { id: 'v1', name: 'Fiat Panda' },
+    { id: 'v2', name: 'BMW X1' },
+    { id: 'v3', name: 'Tesla Model 3' },
+  ];
 
   return (
     <>
@@ -77,6 +85,22 @@ export default function AddServiceButtonModal({ vehicleId }: Props) {
               required
               fullWidth
             />
+            {!vehicleId && (
+              <TextField
+                select
+                fullWidth
+                required
+                label="Seleziona veicolo"
+                value={formData.selectedVehicleId}
+                onChange={handleChange('selectedVehicleId')}
+              >
+                {userVehicles.map((vehicle) => (
+                  <MenuItem key={vehicle.id} value={vehicle.id}>
+                    {vehicle.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
             <TextField
               label="Price"
               type="number"

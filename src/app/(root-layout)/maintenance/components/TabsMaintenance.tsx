@@ -7,6 +7,7 @@ import { VehiclesDatGrid } from '@/app/(root-layout)/maintenance/components/Vehi
 import { GaragesDatGrid } from '@/app/(root-layout)/maintenance/components/GaragesDataGrid';
 import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 import AddGarageButtonModal from '@/app/(root-layout)/maintenance/components/AddGarageButtonModal';
+import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -67,9 +68,9 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Box className="flex flex-col gap-4 h-full">
-          {/*<Box className="flex gap-4">*/}
-          {/*  <AddServiceButtonModal />*/}
-          {/*</Box>*/}
+          <Box className="flex gap-4">
+            <AddServiceButtonModal />
+          </Box>
           <Box className="flex grow">
             <ServicesDataGrid services={services} />
           </Box>
