@@ -12,3 +12,10 @@ export type User = {
   name: string | null;
   email: string | null;
 } | null;
+
+export type Garage = {
+  id: number;
+  name: string;
+  createdAt: string;
+  deletedAt?: string;
+};

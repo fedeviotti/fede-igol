@@ -8,3 +8,11 @@ export const vehiclesTable = pgTable('vehicles', {
   deletedAt: date(),
   userId: varchar({ length: 255 }).notNull(),
 });
+
+export const garagesTable = pgTable('garages', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  createdAt: date().notNull(),
+  deletedAt: date(),
+  userId: varchar({ length: 255 }).notNull(),
+});

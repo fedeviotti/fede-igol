@@ -21,7 +21,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 const items = [
   { label: 'Home', href: '/', icon: <CottageOutlinedIcon /> },
-  { label: 'Manutenzioni', href: '/maintenance', icon: <BuildCircleOutlinedIcon /> },
+  { label: 'Manutenzioni', href: '/maintenance/home', icon: <BuildCircleOutlinedIcon /> },
   { label: 'Dashboard', href: '/dashboard', icon: <SpaceDashboardOutlinedIcon /> },
 ];
 

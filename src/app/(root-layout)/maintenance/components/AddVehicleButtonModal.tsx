@@ -15,7 +15,7 @@ const modalStyle = {
   p: 4,
 };
 
-export default function VehicleFormModal() {
+export default function AddVehicleButtonModal() {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -28,7 +28,7 @@ export default function VehicleFormModal() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log('Form data:', formData);
+    //console.log('Form data:', formData);
     await insertVehicle({
       name: formData.name,
       type: formData.type,

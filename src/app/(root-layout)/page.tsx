@@ -8,7 +8,7 @@ const features = [
     id: 1,
     title: 'Manutenzioni',
     description: 'Gestione e pianificazione delle manutenzioni.',
-    href: '/maintenance',
+    href: '/maintenance/home',
     imageUrl: '/maintenance.png',
   },
   {
