@@ -44,7 +44,7 @@ type Props = {
 export default function TabsMaintenance({ vehicles, garages }: Props) {
   // TODO: Salva il tab selezionato nello store di Zustand per ricordare l'ultima selezione
   // quando l'utente torna su pagina dalla pagina dei servizi
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(2);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -55,14 +55,18 @@ export default function TabsMaintenance({ vehicles, garages }: Props) {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Servizi in scadenza" {...a11yProps(0)} />
-          <Tab label="Veicoli" {...a11yProps(1)} />
-          <Tab label="Officine" {...a11yProps(2)} />
+          <Tab label="Servizi" {...a11yProps(1)} />
+          <Tab label="Veicoli" {...a11yProps(2)} />
+          <Tab label="Officine" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Servizi in scadenza (tabella + eventuali azioni)
+        Servizi in scadenza
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
+        Servizi (tabella + aggiungi servizio)
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
         <Box className="flex flex-col gap-4 h-full">
           <Box className="flex gap-4">
             <AddVehicleButtonModal />
@@ -72,7 +76,7 @@ export default function TabsMaintenance({ vehicles, garages }: Props) {
           </Box>
         </Box>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={value} index={3}>
         <Box className="flex flex-col gap-4 h-full">
           <Box className="flex gap-4">
             <AddGarageButtonModal />

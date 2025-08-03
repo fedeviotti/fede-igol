@@ -24,7 +24,7 @@ export const VehiclesDatGrid: FC<Props> = ({ vehicles }) => {
   const router = useRouter();
 
   const openVehicleHandler = (id: GridRowId) => {
-    router.push(`/maintenance/home/${id}`);
+    router.push(`/maintenance/home/vehicle/${id}`);
   };
 
   const onEditVehicleHandler = (id: GridRowId) => {

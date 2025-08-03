@@ -21,9 +21,10 @@ export default function VehiclePage({ params }: Props) {
         <IconButton onClick={() => router.back()} aria-label="Torna indietro">
           <NavigateBeforeOutlinedIcon />
         </IconButton>
+        {/*TODO: implementa aggiungi servizio */}
         <AddServiceButtonModal vehicleId={vehicleId} />
       </Box>
-      <span>Tabella servizi</span>
+      <span>Servizi (tabella + aggiungi servizio)</span>
     </Box>
   );
 }
