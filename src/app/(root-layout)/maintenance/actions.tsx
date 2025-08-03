@@ -4,8 +4,9 @@ import * as schema from '@/db/schema';
 import { usersSync as users } from 'drizzle-orm/neon';
 import { revalidatePath } from 'next/cache';
 import { fetchWithDrizzle } from '@/db/db';
-import { Garage, Vehicle } from '@/app/types';
+import { Garage, Service, Vehicle } from '@/app/types';
 import { asc, eq } from 'drizzle-orm';
+import { parse } from 'date-fns';
 
 type InsertVehicleProps = Pick<Vehicle, 'name' | 'type'>;
 
@@ -72,4 +73,68 @@ export async function getGarages() {
       .where(eq(schema.garagesTable.userId, userId))
       .orderBy(asc(schema.garagesTable.createdAt));
   });
+}
+
+export async function getServices() {
+  return fetchWithDrizzle(async (db) => {
+    return db
+      .select({
+        id: schema.servicesTable.id,
+        name: schema.servicesTable.name,
+        createdAt: schema.servicesTable.createdAt,
+        description: schema.servicesTable.description,
+        price: schema.servicesTable.price,
+        vehicle: {
+          id: schema.vehiclesTable.id,
+          name: schema.vehiclesTable.name,
+          type: schema.vehiclesTable.type,
+          createdAt: schema.vehiclesTable.createdAt,
+        },
+      })
+      .from(schema.servicesTable)
+      .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .orderBy(asc(schema.servicesTable.createdAt));
+  });
+}
+
+export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number }) {
+  return fetchWithDrizzle(async (db) => {
+    return db
+      .select({
+        id: schema.servicesTable.id,
+        name: schema.servicesTable.name,
+        createdAt: schema.servicesTable.createdAt,
+        description: schema.servicesTable.description,
+        price: schema.servicesTable.price,
+        vehicle: {
+          id: schema.vehiclesTable.id,
+          name: schema.vehiclesTable.name,
+          type: schema.vehiclesTable.type,
+          createdAt: schema.vehiclesTable.createdAt,
+        },
+      })
+      .from(schema.servicesTable)
+      .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, vehicleId))
+      .orderBy(asc(schema.servicesTable.createdAt));
+  });
+}
+
+type InsertServiceProps = Pick<Service, 'name' | 'description' | 'price' | 'expiredAt'>;
+
+export async function insertService(service: InsertServiceProps & { vehicleId: number }) {
+  await fetchWithDrizzle(async (db) => {
+    return db.insert(schema.servicesTable).values({
+      name: service.name,
+      description: service.description,
+      price: service.price,
+      createdAt: new Date().toISOString(),
+      deletedAt: null,
+      expiredAt: service.expiredAt
+        ? parse(service.expiredAt, 'yyyy/MM/dd', new Date()).toISOString()
+        : null,
+      vehicleId: service.vehicleId,
+    });
+  });
+
+  revalidatePath(`/maintenance/home/vehicle/${service.vehicleId}`);
 }

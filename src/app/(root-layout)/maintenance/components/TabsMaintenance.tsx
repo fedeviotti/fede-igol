@@ -2,9 +2,10 @@
 import { ReactNode, SyntheticEvent, useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
 import AddVehicleButtonModal from '@/app/(root-layout)/maintenance/components/AddVehicleButtonModal';
-import { Garage, Vehicle } from '@/app/types';
+import { Garage, Service, Vehicle } from '@/app/types';
 import { VehiclesDatGrid } from '@/app/(root-layout)/maintenance/components/VehiclesDataGrid';
 import { GaragesDatGrid } from '@/app/(root-layout)/maintenance/components/GaragesDataGrid';
+import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 import AddGarageButtonModal from '@/app/(root-layout)/maintenance/components/AddGarageButtonModal';
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -39,9 +40,10 @@ type TabPanelProps = {
 type Props = {
   vehicles: Vehicle[];
   garages: Garage[];
+  services: Service[];
 };
 
-export default function TabsMaintenance({ vehicles, garages }: Props) {
+export default function TabsMaintenance({ vehicles, garages, services }: Props) {
   // TODO: Salva il tab selezionato nello store di Zustand per ricordare l'ultima selezione
   // quando l'utente torna su pagina dalla pagina dei servizi
   const [value, setValue] = useState(2);
@@ -64,7 +66,14 @@ export default function TabsMaintenance({ vehicles, garages }: Props) {
         Servizi in scadenza
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Servizi (tabella + aggiungi servizio)
+        <Box className="flex flex-col gap-4 h-full">
+          {/*<Box className="flex gap-4">*/}
+          {/*  <AddServiceButtonModal />*/}
+          {/*</Box>*/}
+          <Box className="flex grow">
+            <ServicesDataGrid services={services} />
+          </Box>
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <Box className="flex flex-col gap-4 h-full">

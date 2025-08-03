@@ -1,6 +1,7 @@
 'use client';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { Box, Button, Modal, TextField, Typography, MenuItem } from '@mui/material';
+import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { insertService } from '@/app/(root-layout)/maintenance/actions';
 
 const modalStyle = {
   position: 'absolute' as const,
@@ -15,7 +16,7 @@ const modalStyle = {
 };
 
 type Props = {
-  vehicleId: string;
+  vehicleId: number;
 };
 
 export default function AddServiceButtonModal({ vehicleId }: Props) {
@@ -23,7 +24,9 @@ export default function AddServiceButtonModal({ vehicleId }: Props) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    type: '',
+    description: '',
+    price: '',
+    expiredAt: '',
   });
 
   const handleChange = (field: keyof typeof formData) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,12 +35,14 @@ export default function AddServiceButtonModal({ vehicleId }: Props) {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(vehicleId);
-    //console.log('Form data:', formData);
-    // await insertVehicle({
-    //   name: formData.name,
-    //   type: formData.type,
-    // });
+    console.log('Form data:', formData);
+    await insertService({
+      name: formData.name,
+      description: formData.description,
+      price: parseFloat(formData.price),
+      expiredAt: formData.expiredAt,
+      vehicleId,
+    });
     setOpen(false);
   };
 
@@ -66,17 +71,32 @@ export default function AddServiceButtonModal({ vehicleId }: Props) {
               fullWidth
             />
             <TextField
-              label="Type"
-              value={formData.type}
-              onChange={handleChange('type')}
-              select
+              label="Description"
+              value={formData.description}
+              onChange={handleChange('description')}
               required
               fullWidth
-            >
-              <MenuItem value="car">Macchina</MenuItem>
-              <MenuItem value="motorbike">Motocicletta</MenuItem>
-              <MenuItem value="bike">Bicicletta</MenuItem>
-            </TextField>
+            />
+            <TextField
+              label="Price"
+              type="number"
+              value={formData.price}
+              onChange={handleChange('price')}
+              required
+              fullWidth
+            />
+            <TextField
+              label="Expired At"
+              type="date"
+              value={formData.expiredAt}
+              onChange={handleChange('expiredAt')}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }}
+              fullWidth
+            />
             <Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
               <Button onClick={() => setOpen(false)}>Annulla</Button>
               <Button type="submit" variant="contained">

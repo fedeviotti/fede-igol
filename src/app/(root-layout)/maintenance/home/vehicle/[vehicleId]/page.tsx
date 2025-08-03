@@ -3,7 +3,8 @@ import { Box, IconButton } from '@mui/material';
 import NavigateBeforeOutlinedIcon from '@mui/icons-material/NavigateBeforeOutlined';
 import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
 import { useRouter } from 'next/navigation';
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
+import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 
 type Props = {
   params: Promise<{
@@ -14,6 +15,17 @@ type Props = {
 export default function VehiclePage({ params }: Props) {
   const { vehicleId } = use(params);
   const router = useRouter();
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`/api/services?vehicleId=${vehicleId}`);
+      const data = await res.json();
+      setServices(data);
+    }
+
+    fetchData();
+  }, [vehicleId]);
 
   return (
     <Box className="flex flex-col gap-4 h-full">
@@ -21,10 +33,9 @@ export default function VehiclePage({ params }: Props) {
         <IconButton onClick={() => router.back()} aria-label="Torna indietro">
           <NavigateBeforeOutlinedIcon />
         </IconButton>
-        {/*TODO: implementa aggiungi servizio */}
-        <AddServiceButtonModal vehicleId={vehicleId} />
+        <AddServiceButtonModal vehicleId={Number(vehicleId)} />
       </Box>
-      <span>Servizi (tabella + aggiungi servizio)</span>
+      <ServicesDataGrid services={services} />
     </Box>
   );
 }

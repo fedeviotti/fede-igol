@@ -19,3 +19,14 @@ export type Garage = {
   createdAt: string;
   deletedAt?: string;
 };
+
+export type Service = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  createdAt: string;
+  deletedAt?: string;
+  expiredAt?: string;
+  vehicle: Vehicle | null;
+};
