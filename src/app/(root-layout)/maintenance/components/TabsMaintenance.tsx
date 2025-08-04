@@ -69,7 +69,7 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
       <CustomTabPanel value={value} index={1}>
         <Box className="flex flex-col gap-4 h-full">
           <Box className="flex gap-4">
-            <AddServiceButtonModal />
+            <AddServiceButtonModal vehicles={vehicles} />
           </Box>
           <Box className="flex grow">
             <ServicesDataGrid services={services} />

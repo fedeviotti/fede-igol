@@ -106,6 +106,7 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
         createdAt: schema.servicesTable.createdAt,
         description: schema.servicesTable.description,
         price: schema.servicesTable.price,
+        expiredAt: schema.servicesTable.expiredAt,
         vehicle: {
           id: schema.vehiclesTable.id,
           name: schema.vehiclesTable.name,
@@ -130,7 +131,7 @@ export async function insertService(service: InsertServiceProps & { vehicleId: n
       createdAt: new Date().toISOString(),
       deletedAt: null,
       expiredAt: service.expiredAt
-        ? parse(service.expiredAt, 'yyyy/MM/dd', new Date()).toISOString()
+        ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toISOString()
         : null,
       vehicleId: service.vehicleId,
     });
