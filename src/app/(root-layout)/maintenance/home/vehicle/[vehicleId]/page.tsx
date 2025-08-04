@@ -33,7 +33,7 @@ export default function VehiclePage({ params }: Props) {
         <IconButton onClick={() => router.back()} aria-label="Torna indietro">
           <NavigateBeforeOutlinedIcon />
         </IconButton>
-        <AddServiceButtonModal vehicleId={Number(vehicleId)} vehicles={[]} />
+        <AddServiceButtonModal vehicleId={Number(vehicleId)} />
       </Box>
       <ServicesDataGrid services={services} />
     </Box>

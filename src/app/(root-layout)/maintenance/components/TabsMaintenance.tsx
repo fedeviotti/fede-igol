@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, SyntheticEvent, useState } from 'react';
+import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
 import AddVehicleButtonModal from '@/app/(root-layout)/maintenance/components/AddVehicleButtonModal';
 import { Garage, Service, Vehicle } from '@/app/types';
@@ -8,6 +8,7 @@ import { GaragesDatGrid } from '@/app/(root-layout)/maintenance/components/Garag
 import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 import AddGarageButtonModal from '@/app/(root-layout)/maintenance/components/AddGarageButtonModal';
 import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
+import { useStoreActions } from '@/store/store';
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -45,9 +46,12 @@ type Props = {
 };
 
 export default function TabsMaintenance({ vehicles, garages, services }: Props) {
-  // TODO: Salva il tab selezionato nello store di Zustand per ricordare l'ultima selezione
-  // quando l'utente torna su pagina dalla pagina dei servizi
+  const setVehicles = useStoreActions();
   const [value, setValue] = useState(2);
+
+  useEffect(() => {
+    setVehicles.setVehicles(vehicles);
+  }, [vehicles, setVehicles]);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -69,7 +73,7 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
       <CustomTabPanel value={value} index={1}>
         <Box className="flex flex-col gap-4 h-full">
           <Box className="flex gap-4">
-            <AddServiceButtonModal vehicles={vehicles} />
+            <AddServiceButtonModal />
           </Box>
           <Box className="flex grow">
             <ServicesDataGrid services={services} />
@@ -82,7 +86,7 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
             <AddVehicleButtonModal />
           </Box>
           <Box className="flex grow">
-            <VehiclesDatGrid vehicles={vehicles} />
+            <VehiclesDatGrid />
           </Box>
         </Box>
       </CustomTabPanel>

@@ -2,7 +2,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import { insertService } from '@/app/(root-layout)/maintenance/actions';
-import { Vehicle } from '@/app/types';
+import { useVehicles } from '@/store/store';
 
 const modalStyle = {
   position: 'absolute' as const,
@@ -18,11 +18,11 @@ const modalStyle = {
 
 type Props = {
   vehicleId?: number;
-  vehicles: Vehicle[];
 };
 
-export default function AddServiceButtonModal({ vehicleId, vehicles }: Props) {
+export default function AddServiceButtonModal({ vehicleId }: Props) {
   const [open, setOpen] = useState(false);
+  const vehicles = useVehicles();
   const [formData, setFormData] = useState({
     name: '',
     description: '',

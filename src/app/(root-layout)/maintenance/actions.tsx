@@ -76,7 +76,7 @@ export async function getGarages() {
 }
 
 export async function getServices() {
-  return fetchWithDrizzle(async (db) => {
+  return fetchWithDrizzle(async (db, { userId }) => {
     return db
       .select({
         id: schema.servicesTable.id,
@@ -84,6 +84,7 @@ export async function getServices() {
         createdAt: schema.servicesTable.createdAt,
         description: schema.servicesTable.description,
         price: schema.servicesTable.price,
+        expiredAt: schema.servicesTable.expiredAt,
         vehicle: {
           id: schema.vehiclesTable.id,
           name: schema.vehiclesTable.name,
@@ -93,6 +94,8 @@ export async function getServices() {
       })
       .from(schema.servicesTable)
       .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
+      .where(eq(users.id, userId))
       .orderBy(asc(schema.servicesTable.createdAt));
   });
 }
@@ -115,7 +118,8 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
         },
       })
       .from(schema.servicesTable)
-      .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, vehicleId))
+      .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .where(eq(schema.servicesTable.vehicleId, vehicleId))
       .orderBy(asc(schema.servicesTable.createdAt));
   });
 }
@@ -137,5 +141,6 @@ export async function insertService(service: InsertServiceProps & { vehicleId: n
     });
   });
 
+  // FIXME: il revalidate non funziona
   revalidatePath(`/maintenance/home/vehicle/${service.vehicleId}`);
 }

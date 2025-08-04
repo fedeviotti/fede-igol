@@ -13,14 +13,12 @@ import DirectionsBikeOutlinedIcon from '@mui/icons-material/DirectionsBikeOutlin
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { User, Vehicle } from '@/app/types';
+import { User } from '@/app/types';
 import { useRouter } from 'next/navigation';
+import { useVehicles } from '@/store/store';
 
-type Props = {
-  vehicles: Vehicle[];
-};
-
-export const VehiclesDatGrid: FC<Props> = ({ vehicles }) => {
+export const VehiclesDatGrid: FC = () => {
+  const vehicles = useVehicles();
   const router = useRouter();
 
   const openVehicleHandler = (id: GridRowId) => {
