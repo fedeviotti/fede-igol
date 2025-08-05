@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/neon-http';
 import { eq } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/neon-http';
 import { vehiclesTable } from './db/schema';
 
 const db = drizzle(process.env.DATABASE_URL!);

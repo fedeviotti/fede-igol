@@ -1,6 +1,7 @@
 'use client';
-import { useState, ChangeEvent, FormEvent } from 'react';
+
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { insertGarage } from '@/app/(root-layout)/maintenance/actions';
 
 const modalStyle = {
@@ -15,7 +16,7 @@ const modalStyle = {
   p: 4,
 };
 
-export default function AddGarageButtonModal() {
+export const AddGarageButtonModal: FC = () => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -69,4 +70,4 @@ export default function AddGarageButtonModal() {
       </Modal>
     </>
   );
-}
+};

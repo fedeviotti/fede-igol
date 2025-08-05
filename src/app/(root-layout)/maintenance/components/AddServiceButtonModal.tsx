@@ -1,6 +1,7 @@
 'use client';
-import { useState, ChangeEvent, FormEvent } from 'react';
+
 import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { insertService } from '@/app/(root-layout)/maintenance/actions';
 import { useGarages, useVehicles } from '@/store/store';
 
@@ -21,7 +22,7 @@ type Props = {
   onServiceAddedAction?: () => void;
 };
 
-export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction }: Props) {
+export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedAction }) => {
   const [open, setOpen] = useState(false);
   const vehicles = useVehicles();
   const garages = useGarages();
@@ -135,4 +136,4 @@ export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction 
       </Modal>
     </>
   );
-}
+};

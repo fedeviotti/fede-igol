@@ -1,7 +1,7 @@
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 import { ContentLayout } from '@/components/ContentLayout';
 import { stackServerApp } from '@/stack';
-import { redirect } from 'next/navigation';
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const user = await stackServerApp.getUser();

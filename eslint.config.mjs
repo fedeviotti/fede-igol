@@ -21,6 +21,10 @@ const eslintConfig = [
       'prettier/prettier': 'error',
       // Opzionale: limite di lunghezza della riga
       'max-len': ['error', { code: 100 }],
+      'sort-imports': 'off', // disabilita ordinamento nativo ESLint
+      'import/order': 'off', // disabilita ordinamento da eslint-plugin-import
+      'import/first': 'off', // disabilita controllo su posizione import
+      'import/newline-after-import': 'off', // disabilita newline forzato
     },
   },
 ];

@@ -1,4 +1,11 @@
 'use client';
+
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DirectionsBikeOutlinedIcon from '@mui/icons-material/DirectionsBikeOutlined';
+import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import PedalBikeOutlinedIcon from '@mui/icons-material/PedalBikeOutlined';
 import {
   DataGrid,
   GridActionsCellItem,
@@ -6,15 +13,9 @@ import {
   GridRenderCellParams,
   GridRowId,
 } from '@mui/x-data-grid';
-import { FC } from 'react';
-import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
-import PedalBikeOutlinedIcon from '@mui/icons-material/PedalBikeOutlined';
-import DirectionsBikeOutlinedIcon from '@mui/icons-material/DirectionsBikeOutlined';
-import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { User } from '@/app/types';
 import { useRouter } from 'next/navigation';
+import { FC } from 'react';
+import { User } from '@/app/types';
 import { useVehicles } from '@/store/store';
 
 export const VehiclesDatGrid: FC = () => {

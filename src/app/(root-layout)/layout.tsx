@@ -1,8 +1,9 @@
 'use client';
+
 import { Box } from '@mui/material';
-import Topbar from '@/components/Topbar';
-import Sidebar from '@/components/Sidebar';
 import { ReactNode, useState } from 'react';
+import Sidebar from '@/components/Sidebar';
+import Topbar from '@/components/Topbar';
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);

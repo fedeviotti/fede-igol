@@ -1,12 +1,12 @@
 'use server';
 
-import * as schema from '@/db/schema';
+import { parse } from 'date-fns';
+import { asc, eq } from 'drizzle-orm';
 import { usersSync as users } from 'drizzle-orm/neon';
 import { revalidatePath } from 'next/cache';
-import { fetchWithDrizzle } from '@/db/db';
 import { Garage, Service, Vehicle } from '@/app/types';
-import { asc, eq } from 'drizzle-orm';
-import { parse } from 'date-fns';
+import { fetchWithDrizzle } from '@/db/db';
+import * as schema from '@/db/schema';
 
 type InsertVehicleProps = Pick<Vehicle, 'name' | 'type'>;
 

@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
-import { StackProvider, StackTheme } from '@stackframe/stack';
-import { stackServerApp } from '@/stack';
-import { ReactNode } from 'react';
-import { Roboto } from 'next/font/google';
+import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
+import { StackProvider, StackTheme } from '@stackframe/stack';
+import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
+import { ReactNode } from 'react';
+import { stackServerApp } from '@/stack';
 import theme from '../theme';
-import { CssBaseline } from '@mui/material';
 import './globals.css';
 
 const roboto = Roboto({

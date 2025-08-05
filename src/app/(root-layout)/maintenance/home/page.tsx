@@ -1,6 +1,6 @@
-import TabsMaintenance from '@/app/(root-layout)/maintenance/components/TabsMaintenance';
-import { getGarages, getServices, getVehicles } from '@/app/(root-layout)/maintenance/actions';
+import TabsMaintenance from '@components/TabsMaintenance';
 import { LinearProgress } from '@mui/material';
+import { getGarages, getServices, getVehicles } from '@/app/(root-layout)/maintenance/actions';
 import { Service } from '@/app/types';
 
 export default async function VehiclesPage() {

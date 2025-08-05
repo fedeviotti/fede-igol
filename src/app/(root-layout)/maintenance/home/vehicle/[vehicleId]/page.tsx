@@ -1,11 +1,11 @@
 'use client';
-import { Box, IconButton } from '@mui/material';
+
+import { AddServiceButtonModal } from '@components/AddServiceButtonModal';
+import { ServicesDataGrid } from '@components/ServicesDataGrid';
 import NavigateBeforeOutlinedIcon from '@mui/icons-material/NavigateBeforeOutlined';
-// eslint-disable-next-line max-len
-import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
+import { Box, IconButton } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { use, useCallback, useEffect, useState } from 'react';
-import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 
 type Props = {
   params: Promise<{

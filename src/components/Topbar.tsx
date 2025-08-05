@@ -1,8 +1,9 @@
 'use client';
-import { AppBar, Box, Typography, Toolbar } from '@mui/material';
+
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+import { UserButton } from '@stackframe/stack';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { UserButton } from '@stackframe/stack';
 
 export default function Topbar() {
   const router = useRouter();

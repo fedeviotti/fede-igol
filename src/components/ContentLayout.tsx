@@ -1,5 +1,5 @@
-import { PropsWithChildren, FC } from 'react';
 import { Box, Typography } from '@mui/material';
+import { FC, PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   title: string;

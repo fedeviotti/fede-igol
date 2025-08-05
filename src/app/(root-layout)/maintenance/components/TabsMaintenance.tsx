@@ -1,15 +1,14 @@
 'use client';
-import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
+
+import { AddGarageButtonModal } from '@components/AddGarageButtonModal';
+import { AddServiceButtonModal } from '@components/AddServiceButtonModal';
+import { AddVehicleButtonModal } from '@components/AddVehicleButtonModal';
+import { GaragesDatGrid } from '@components/GaragesDataGrid';
+import { ServicesDataGrid } from '@components/ServicesDataGrid';
+import { VehiclesDatGrid } from '@components/VehiclesDataGrid';
 import { Box, Tab, Tabs } from '@mui/material';
-// eslint-disable-next-line max-len
-import AddVehicleButtonModal from '@/app/(root-layout)/maintenance/components/AddVehicleButtonModal';
+import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
-import { VehiclesDatGrid } from '@/app/(root-layout)/maintenance/components/VehiclesDataGrid';
-import { GaragesDatGrid } from '@/app/(root-layout)/maintenance/components/GaragesDataGrid';
-import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
-import AddGarageButtonModal from '@/app/(root-layout)/maintenance/components/AddGarageButtonModal';
-// eslint-disable-next-line max-len
-import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
 import { useStoreActions } from '@/store/store';
 
 function CustomTabPanel(props: TabPanelProps) {

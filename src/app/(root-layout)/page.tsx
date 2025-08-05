@@ -1,7 +1,8 @@
 'use client';
-import { ContentLayout } from '@/components/ContentLayout';
-import { Box, Typography, Button, Card, CardContent, CardActions, CardMedia } from '@mui/material';
+
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { ContentLayout } from '@/components/ContentLayout';
 
 const features = [
   {

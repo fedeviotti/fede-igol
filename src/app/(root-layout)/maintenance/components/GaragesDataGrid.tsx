@@ -1,8 +1,9 @@
 'use client';
+
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid';
 import { FC } from 'react';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Garage } from '@/app/types';
 
 type Props = {

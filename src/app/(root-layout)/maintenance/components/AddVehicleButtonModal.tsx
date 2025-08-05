@@ -1,6 +1,7 @@
 'use client';
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { Box, Button, Modal, TextField, Typography, MenuItem } from '@mui/material';
+
+import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { insertVehicle } from '@/app/(root-layout)/maintenance/actions';
 
 const modalStyle = {
@@ -15,7 +16,7 @@ const modalStyle = {
   p: 4,
 };
 
-export default function AddVehicleButtonModal() {
+export const AddVehicleButtonModal: FC = () => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -83,4 +84,4 @@ export default function AddVehicleButtonModal() {
       </Modal>
     </>
   );
-}
+};
