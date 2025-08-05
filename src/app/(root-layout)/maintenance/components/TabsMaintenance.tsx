@@ -1,12 +1,14 @@
 'use client';
 import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
+// eslint-disable-next-line max-len
 import AddVehicleButtonModal from '@/app/(root-layout)/maintenance/components/AddVehicleButtonModal';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { VehiclesDatGrid } from '@/app/(root-layout)/maintenance/components/VehiclesDataGrid';
 import { GaragesDatGrid } from '@/app/(root-layout)/maintenance/components/GaragesDataGrid';
 import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 import AddGarageButtonModal from '@/app/(root-layout)/maintenance/components/AddGarageButtonModal';
+// eslint-disable-next-line max-len
 import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
 import { useStoreActions } from '@/store/store';
 

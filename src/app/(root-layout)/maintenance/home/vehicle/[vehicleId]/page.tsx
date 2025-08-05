@@ -1,9 +1,10 @@
 'use client';
 import { Box, IconButton } from '@mui/material';
 import NavigateBeforeOutlinedIcon from '@mui/icons-material/NavigateBeforeOutlined';
+// eslint-disable-next-line max-len
 import AddServiceButtonModal from '@/app/(root-layout)/maintenance/components/AddServiceButtonModal';
 import { useRouter } from 'next/navigation';
-import { use, useEffect, useState } from 'react';
+import { use, useCallback, useEffect, useState } from 'react';
 import { ServicesDataGrid } from '@/app/(root-layout)/maintenance/components/ServicesDataGrid';
 
 type Props = {
@@ -18,13 +19,13 @@ export default function VehiclePage({ params }: Props) {
   const [services, setServices] = useState();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     const res = await fetch(`/api/services?vehicleId=${vehicleId}`);
     const data = await res.json();
     setServices(data);
     setIsLoading(false);
-  };
+  }, [vehicleId]);
 
   useEffect(() => {
     if (!services) {

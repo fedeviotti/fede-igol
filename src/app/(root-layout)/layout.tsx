@@ -1,7 +1,7 @@
 'use client';
 import { Box } from '@mui/material';
 import Topbar from '@/components/Topbar';
-import Sidebar, { drawerWidthClose, drawerWidthOpen } from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 import { ReactNode, useState } from 'react';
 
 export default function AppLayout({ children }: { children: ReactNode }) {
