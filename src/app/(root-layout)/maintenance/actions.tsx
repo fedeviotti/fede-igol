@@ -82,7 +82,6 @@ export async function getServices() {
         id: schema.servicesTable.id,
         name: schema.servicesTable.name,
         createdAt: schema.servicesTable.createdAt,
-        description: schema.servicesTable.description,
         price: schema.servicesTable.price,
         expiredAt: schema.servicesTable.expiredAt,
         vehicle: {
@@ -113,7 +112,6 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
         id: schema.servicesTable.id,
         name: schema.servicesTable.name,
         createdAt: schema.servicesTable.createdAt,
-        description: schema.servicesTable.description,
         price: schema.servicesTable.price,
         expiredAt: schema.servicesTable.expiredAt,
         vehicle: {
@@ -136,7 +134,7 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
   });
 }
 
-type InsertServiceProps = Pick<Service, 'name' | 'description' | 'price' | 'expiredAt'> & {
+type InsertServiceProps = Pick<Service, 'name' | 'price' | 'expiredAt'> & {
   vehicleId: number;
   garageId: number;
 };
@@ -145,7 +143,6 @@ export async function insertService(service: InsertServiceProps) {
   await fetchWithDrizzle(async (db) => {
     return db.insert(schema.servicesTable).values({
       name: service.name,
-      description: service.description,
       price: service.price,
       createdAt: new Date().toISOString(),
       deletedAt: null,

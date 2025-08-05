@@ -27,7 +27,6 @@ export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction 
   const garages = useGarages();
   const [formData, setFormData] = useState({
     name: '',
-    description: '',
     price: '',
     expiredAt: '',
     selectedVehicleId: vehicleId ? Number(vehicleId) : '',
@@ -43,7 +42,6 @@ export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction 
     console.log('Form data:', formData);
     await insertService({
       name: formData.name,
-      description: formData.description,
       price: parseFloat(formData.price),
       expiredAt: formData.expiredAt,
       vehicleId: formData.selectedVehicleId ? Number(formData.selectedVehicleId) : 0,
@@ -74,13 +72,6 @@ export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction 
               label="Name"
               value={formData.name}
               onChange={handleChange('name')}
-              required
-              fullWidth
-            />
-            <TextField
-              label="Description"
-              value={formData.description}
-              onChange={handleChange('description')}
               required
               fullWidth
             />

@@ -20,7 +20,6 @@ export const garagesTable = pgTable('garages', {
 export const servicesTable = pgTable('services', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
-  description: varchar().notNull(),
   price: integer().notNull(),
   createdAt: date().notNull(),
   deletedAt: date(),
