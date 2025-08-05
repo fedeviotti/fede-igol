@@ -8,10 +8,11 @@ import { Service, Vehicle } from '@/app/types';
 import { useRouter } from 'next/navigation';
 
 type Props = {
-  services: Service[];
+  services?: Service[];
+  isLoading?: boolean;
 };
 
-export const ServicesDataGrid: FC<Props> = ({ services }) => {
+export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => {
   const router = useRouter();
 
   const openServiceHandler = (id: GridRowId) => {
@@ -67,5 +68,5 @@ export const ServicesDataGrid: FC<Props> = ({ services }) => {
     },
   ];
 
-  return <DataGrid rows={services} columns={columns} />;
+  return <DataGrid rows={services} columns={columns} loading={isLoading} />;
 };

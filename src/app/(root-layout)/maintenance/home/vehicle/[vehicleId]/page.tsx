@@ -15,17 +15,22 @@ type Props = {
 export default function VehiclePage({ params }: Props) {
   const { vehicleId } = use(params);
   const router = useRouter();
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const res = await fetch(`/api/services?vehicleId=${vehicleId}`);
+    const data = await res.json();
+    setServices(data);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(`/api/services?vehicleId=${vehicleId}`);
-      const data = await res.json();
-      setServices(data);
+    if (!services) {
+      fetchData();
     }
-
-    fetchData();
-  }, [vehicleId]);
+  }, [fetchData, services, vehicleId]);
 
   return (
     <Box className="flex flex-col gap-4 h-full">
@@ -33,9 +38,9 @@ export default function VehiclePage({ params }: Props) {
         <IconButton onClick={() => router.back()} aria-label="Torna indietro">
           <NavigateBeforeOutlinedIcon />
         </IconButton>
-        <AddServiceButtonModal vehicleId={Number(vehicleId)} />
+        <AddServiceButtonModal vehicleId={Number(vehicleId)} onServiceAddedAction={fetchData} />
       </Box>
-      <ServicesDataGrid services={services} />
+      <ServicesDataGrid services={services} isLoading={isLoading} />
     </Box>
   );
 }

@@ -18,9 +18,10 @@ const modalStyle = {
 
 type Props = {
   vehicleId?: number;
+  onServiceAddedAction?: () => void;
 };
 
-export default function AddServiceButtonModal({ vehicleId }: Props) {
+export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction }: Props) {
   const [open, setOpen] = useState(false);
   const vehicles = useVehicles();
   const [formData, setFormData] = useState({
@@ -45,6 +46,7 @@ export default function AddServiceButtonModal({ vehicleId }: Props) {
       expiredAt: formData.expiredAt,
       vehicleId: formData.selectedVehicleId ? Number(formData.selectedVehicleId) : 0,
     });
+    onServiceAddedAction?.();
     setOpen(false);
   };
 
