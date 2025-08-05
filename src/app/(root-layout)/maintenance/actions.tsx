@@ -141,9 +141,5 @@ export async function insertService(service: InsertServiceProps & { vehicleId: n
     });
   });
 
-  console.log('BBB', service.vehicleId);
-
-  // FIXME: altezza tabella
-  // FIXME: il revalidate non funziona
   revalidatePath('/maintenance/home');
 }
