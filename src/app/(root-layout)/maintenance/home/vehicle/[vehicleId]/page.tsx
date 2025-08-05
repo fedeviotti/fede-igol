@@ -33,7 +33,7 @@ export default function VehiclePage({ params }: Props) {
   }, [fetchData, services, vehicleId]);
 
   return (
-    <Box className="flex flex-col gap-4 h-full">
+    <Box className="vehicle-page-data-grid-height flex flex-col gap-4">
       <Box className="flex gap-4">
         <IconButton onClick={() => router.back()} aria-label="Torna indietro">
           <NavigateBeforeOutlinedIcon />

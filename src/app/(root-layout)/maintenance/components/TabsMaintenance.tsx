@@ -21,7 +21,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box>{children}</Box>}
     </div>
   );
 }
@@ -71,31 +71,31 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
         Servizi in scadenza
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Box className="flex flex-col gap-4 h-full">
+        <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
             <AddServiceButtonModal />
           </Box>
-          <Box className="flex grow">
+          <Box className="tabs-maintenance-data-grid-height">
             <ServicesDataGrid services={services} />
           </Box>
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Box className="flex flex-col gap-4 h-full">
+        <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
             <AddVehicleButtonModal />
           </Box>
-          <Box className="flex grow">
+          <Box className="tabs-maintenance-data-grid-height">
             <VehiclesDatGrid />
           </Box>
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <Box className="flex flex-col gap-4 h-full">
+        <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
             <AddGarageButtonModal />
           </Box>
-          <Box className="flex grow">
+          <Box className="tabs-maintenance-data-grid-height">
             <GaragesDatGrid garages={garages} />
           </Box>
         </Box>
