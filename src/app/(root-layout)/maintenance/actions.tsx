@@ -91,9 +91,15 @@ export async function getServices() {
           type: schema.vehiclesTable.type,
           createdAt: schema.vehiclesTable.createdAt,
         },
+        garage: {
+          id: schema.garagesTable.id,
+          name: schema.garagesTable.name,
+          createdAt: schema.garagesTable.createdAt,
+        },
       })
       .from(schema.servicesTable)
       .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
       .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
       .where(eq(users.id, userId))
       .orderBy(asc(schema.servicesTable.createdAt));
@@ -116,17 +122,26 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
           type: schema.vehiclesTable.type,
           createdAt: schema.vehiclesTable.createdAt,
         },
+        garage: {
+          id: schema.garagesTable.id,
+          name: schema.garagesTable.name,
+          createdAt: schema.garagesTable.createdAt,
+        },
       })
       .from(schema.servicesTable)
       .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
       .where(eq(schema.servicesTable.vehicleId, vehicleId))
       .orderBy(asc(schema.servicesTable.createdAt));
   });
 }
 
-type InsertServiceProps = Pick<Service, 'name' | 'description' | 'price' | 'expiredAt'>;
+type InsertServiceProps = Pick<Service, 'name' | 'description' | 'price' | 'expiredAt'> & {
+  vehicleId: number;
+  garageId: number;
+};
 
-export async function insertService(service: InsertServiceProps & { vehicleId: number }) {
+export async function insertService(service: InsertServiceProps) {
   await fetchWithDrizzle(async (db) => {
     return db.insert(schema.servicesTable).values({
       name: service.name,
@@ -138,6 +153,7 @@ export async function insertService(service: InsertServiceProps & { vehicleId: n
         ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toISOString()
         : null,
       vehicleId: service.vehicleId,
+      garageId: service.garageId,
     });
   });
 

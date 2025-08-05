@@ -26,4 +26,5 @@ export const servicesTable = pgTable('services', {
   deletedAt: date(),
   expiredAt: date(),
   vehicleId: integer().notNull(),
+  garageId: integer().notNull(),
 });

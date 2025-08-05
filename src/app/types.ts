@@ -29,4 +29,5 @@ export type Service = {
   deletedAt?: string;
   expiredAt?: string;
   vehicle: Vehicle | null;
+  garage: Garage | null;
 };

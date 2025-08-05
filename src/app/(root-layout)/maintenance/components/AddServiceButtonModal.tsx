@@ -2,7 +2,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import { insertService } from '@/app/(root-layout)/maintenance/actions';
-import { useVehicles } from '@/store/store';
+import { useGarages, useVehicles } from '@/store/store';
 
 const modalStyle = {
   position: 'absolute' as const,
@@ -24,12 +24,14 @@ type Props = {
 export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction }: Props) {
   const [open, setOpen] = useState(false);
   const vehicles = useVehicles();
+  const garages = useGarages();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     expiredAt: '',
     selectedVehicleId: vehicleId ? Number(vehicleId) : '',
+    garageId: '',
   });
 
   const handleChange = (field: keyof typeof formData) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +47,7 @@ export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction 
       price: parseFloat(formData.price),
       expiredAt: formData.expiredAt,
       vehicleId: formData.selectedVehicleId ? Number(formData.selectedVehicleId) : 0,
+      garageId: Number(formData.garageId),
     });
     onServiceAddedAction?.();
     setOpen(false);
@@ -93,6 +96,20 @@ export default function AddServiceButtonModal({ vehicleId, onServiceAddedAction 
               {vehicles.map((vehicle) => (
                 <MenuItem key={vehicle.id} value={vehicle.id}>
                   {vehicle.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select
+              fullWidth
+              required
+              label="Seleziona officina"
+              value={formData.garageId}
+              onChange={handleChange('garageId')}
+            >
+              {garages.map((garage) => (
+                <MenuItem key={garage.id} value={garage.id}>
+                  {garage.name}
                 </MenuItem>
               ))}
             </TextField>

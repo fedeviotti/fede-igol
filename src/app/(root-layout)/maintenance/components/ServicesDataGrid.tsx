@@ -4,7 +4,7 @@ import { FC } from 'react';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { Service, Vehicle } from '@/app/types';
+import { Garage, Service, Vehicle } from '@/app/types';
 import { useRouter } from 'next/navigation';
 
 type Props = {
@@ -34,6 +34,14 @@ export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => 
       headerName: 'Veicolo',
       width: 200,
       valueGetter: (value: Partial<Vehicle>) => {
+        return value?.name || 'N/A';
+      },
+    },
+    {
+      field: 'garage',
+      headerName: 'Garage',
+      width: 200,
+      valueGetter: (value: Partial<Garage>) => {
         return value?.name || 'N/A';
       },
     },

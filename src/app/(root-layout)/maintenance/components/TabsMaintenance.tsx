@@ -48,12 +48,16 @@ type Props = {
 };
 
 export default function TabsMaintenance({ vehicles, garages, services }: Props) {
-  const setVehicles = useStoreActions();
+  const { setVehicles, setGarages } = useStoreActions();
   const [value, setValue] = useState(2);
 
   useEffect(() => {
-    setVehicles.setVehicles(vehicles);
+    setVehicles(vehicles);
   }, [vehicles, setVehicles]);
+
+  useEffect(() => {
+    setGarages(garages);
+  }, [garages, setGarages]);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
