@@ -101,7 +101,7 @@ export async function getServices() {
       .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
       .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
       .where(eq(users.id, userId))
-      .orderBy(asc(schema.servicesTable.createdAt));
+      .orderBy(asc(schema.servicesTable.expiredAt));
   });
 }
 
@@ -130,7 +130,7 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
       .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
       .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
       .where(eq(schema.servicesTable.vehicleId, vehicleId))
-      .orderBy(asc(schema.servicesTable.createdAt));
+      .orderBy(asc(schema.servicesTable.expiredAt));
   });
 }
 

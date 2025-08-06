@@ -3,6 +3,7 @@
 import { AddGarageButtonModal } from '@components/AddGarageButtonModal';
 import { AddServiceButtonModal } from '@components/AddServiceButtonModal';
 import { AddVehicleButtonModal } from '@components/AddVehicleButtonModal';
+import { ExpiringServicesDataGrid } from '@components/ExpiringServicesDataGrid';
 import { GaragesDatGrid } from '@components/GaragesDataGrid';
 import { ServicesDataGrid } from '@components/ServicesDataGrid';
 import { VehiclesDatGrid } from '@components/VehiclesDataGrid';
@@ -73,7 +74,11 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Servizi in scadenza
+        <Box className="pt-2 h-full">
+          <Box className="tabs-maintenance-data-grid-height">
+            <ExpiringServicesDataGrid services={services} />
+          </Box>
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Box className="flex flex-col gap-2 pt-2 h-full">
