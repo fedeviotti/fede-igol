@@ -7,6 +7,7 @@ import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-dat
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
+import { formatItalianDate } from '@/app/utils/utils';
 
 type Props = {
   services?: Service[];
@@ -46,8 +47,13 @@ export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => 
         return value?.name || 'N/A';
       },
     },
-    { field: 'createdAt', headerName: 'Data creazione', width: 150 },
-    { field: 'expiredAt', headerName: 'Data scadenza', width: 150 },
+    {
+      field: 'createdAt',
+      headerName: 'Data creazione',
+      width: 150,
+      valueGetter: formatItalianDate,
+    },
+    { field: 'expiredAt', headerName: 'Data scadenza', width: 150, valueGetter: formatItalianDate },
     {
       field: 'actions',
       type: 'actions',

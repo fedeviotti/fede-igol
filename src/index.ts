@@ -9,7 +9,7 @@ async function main() {
   const vehicle: typeof vehiclesTable.$inferInsert = {
     name: 'Renault Captur',
     type: 'car',
-    createdAt: new Date().toISOString(),
+    createdAt: new Date().toLocaleDateString(),
     deletedAt: null,
     userId: '123',
   };

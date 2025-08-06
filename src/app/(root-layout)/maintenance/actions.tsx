@@ -15,7 +15,7 @@ export async function insertVehicle(vehicle: InsertVehicleProps) {
     return db.insert(schema.vehiclesTable).values({
       name: vehicle.name,
       type: vehicle.type,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toLocaleDateString(),
       deletedAt: null,
       userId,
     });
@@ -51,7 +51,7 @@ export async function insertGarage(vehicle: InsertGarageProps) {
   await fetchWithDrizzle(async (db, { userId }) => {
     return db.insert(schema.garagesTable).values({
       name: vehicle.name,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toLocaleDateString(),
       deletedAt: null,
       userId,
     });
@@ -144,10 +144,10 @@ export async function insertService(service: InsertServiceProps) {
     return db.insert(schema.servicesTable).values({
       name: service.name,
       price: service.price,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toLocaleDateString(),
       deletedAt: null,
       expiredAt: service.expiredAt
-        ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toISOString()
+        ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
         : null,
       vehicleId: service.vehicleId,
       garageId: service.garageId,

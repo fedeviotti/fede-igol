@@ -16,6 +16,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { User } from '@/app/types';
+import { formatItalianDate } from '@/app/utils/utils';
 import { useVehicles } from '@/store/store';
 
 export const VehiclesDatGrid: FC = () => {
@@ -53,7 +54,12 @@ export const VehiclesDatGrid: FC = () => {
         }
       },
     },
-    { field: 'createdAt', headerName: 'Data creazione', width: 150 },
+    {
+      field: 'createdAt',
+      headerName: 'Data creazione',
+      width: 150,
+      valueGetter: formatItalianDate,
+    },
     {
       field: 'user',
       headerName: 'Proprietario',
