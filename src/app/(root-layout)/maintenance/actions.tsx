@@ -1,7 +1,7 @@
 'use server';
 
 import { parse } from 'date-fns';
-import { and, asc, eq, isNull } from 'drizzle-orm';
+import { and, asc, eq, isNotNull, isNull, lte } from 'drizzle-orm';
 import { usersSync as users } from 'drizzle-orm/neon';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { fetchWithDrizzle } from '@/db/db';
@@ -128,6 +128,47 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
       .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
       .where(
         and(eq(schema.servicesTable.vehicleId, vehicleId), isNull(schema.servicesTable.deletedAt))
+      )
+      .orderBy(asc(schema.servicesTable.expiredAt));
+  });
+}
+
+export async function getExpiringServices() {
+  return fetchWithDrizzle(async (db, { userId }) => {
+    const oneWeekFromNow = new Date();
+    oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
+    return db
+      .select({
+        id: schema.servicesTable.id,
+        name: schema.servicesTable.name,
+        createdAt: schema.servicesTable.createdAt,
+        price: schema.servicesTable.price,
+        executedAt: schema.servicesTable.executedAt,
+        expiredAt: schema.servicesTable.expiredAt,
+        vehicle: {
+          id: schema.vehiclesTable.id,
+          name: schema.vehiclesTable.name,
+          type: schema.vehiclesTable.type,
+          createdAt: schema.vehiclesTable.createdAt,
+        },
+        garage: {
+          id: schema.garagesTable.id,
+          name: schema.garagesTable.name,
+          createdAt: schema.garagesTable.createdAt,
+        },
+      })
+      .from(schema.servicesTable)
+      .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
+      .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
+      .where(
+        and(
+          eq(users.id, userId),
+          isNull(schema.servicesTable.deletedAt),
+          isNotNull(schema.servicesTable.expiredAt),
+          lte(schema.servicesTable.expiredAt, oneWeekFromNow.toISOString().split('T')[0])
+        )
       )
       .orderBy(asc(schema.servicesTable.expiredAt));
   });

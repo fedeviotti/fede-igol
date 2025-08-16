@@ -4,6 +4,7 @@ import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { UserButton } from '@stackframe/stack';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import NotificationBell from './NotificationBell';
 
 export default function Topbar() {
   const router = useRouter();
@@ -37,7 +38,10 @@ export default function Topbar() {
             FEDE-IGOL
           </Typography>
         </Box>
-        <UserButton />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <NotificationBell />
+          <UserButton />
+        </Box>
       </Toolbar>
     </AppBar>
   );
