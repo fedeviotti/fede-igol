@@ -54,7 +54,7 @@ export default function TabsMaintenance({
   vehicles,
   garages,
   services,
-  onServiceUpdatedAction: refresh,
+  onServiceUpdatedAction: refreshServices,
   onVehicleUpdatedAction: refreshVehicles,
   onGarageUpdatedAction: refreshGarages,
 }: Props) {
@@ -86,17 +86,20 @@ export default function TabsMaintenance({
       <CustomTabPanel value={value} index={0}>
         <Box className="pt-2 h-full">
           <Box className="tabs-maintenance-data-grid-height">
-            <ExpiringServicesDataGrid services={services} onServiceUpdatedAction={refresh} />
+            <ExpiringServicesDataGrid
+              services={services}
+              onServiceUpdatedAction={refreshServices}
+            />
           </Box>
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
-            <AddServiceButtonModal onServiceAddedAction={refresh} />
+            <AddServiceButtonModal onServiceAddedAction={refreshServices} />
           </Box>
           <Box className="tabs-maintenance-data-grid-height">
-            <ServicesDataGrid services={services} onServiceUpdatedAction={refresh} />
+            <ServicesDataGrid services={services} onServiceUpdatedAction={refreshServices} />
           </Box>
         </Box>
       </CustomTabPanel>
