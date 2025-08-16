@@ -41,7 +41,11 @@ export default function VehiclePage({ params }: Props) {
         </IconButton>
         <AddServiceButtonModal vehicleId={Number(vehicleId)} onServiceAddedAction={fetchData} />
       </Box>
-      <ServicesDataGrid services={services} isLoading={isLoading} />
+      <ServicesDataGrid
+        services={services}
+        isLoading={isLoading}
+        onServiceUpdatedAction={fetchData}
+      />
     </Box>
   );
 }

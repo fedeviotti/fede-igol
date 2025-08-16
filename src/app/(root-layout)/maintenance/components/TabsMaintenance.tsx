@@ -45,9 +45,15 @@ type Props = {
   vehicles: Vehicle[];
   garages: Garage[];
   services: Service[];
+  onServiceUpdatedAction?: () => void;
 };
 
-export default function TabsMaintenance({ vehicles, garages, services }: Props) {
+export default function TabsMaintenance({
+  vehicles,
+  garages,
+  services,
+  onServiceUpdatedAction: refresh,
+}: Props) {
   const { setVehicles, setGarages } = useStoreActions();
   const [value, setValue] = useState(2);
 
@@ -76,17 +82,17 @@ export default function TabsMaintenance({ vehicles, garages, services }: Props) 
       <CustomTabPanel value={value} index={0}>
         <Box className="pt-2 h-full">
           <Box className="tabs-maintenance-data-grid-height">
-            <ExpiringServicesDataGrid services={services} />
+            <ExpiringServicesDataGrid services={services} onServiceUpdatedAction={refresh} />
           </Box>
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
-            <AddServiceButtonModal />
+            <AddServiceButtonModal onServiceAddedAction={refresh} />
           </Box>
           <Box className="tabs-maintenance-data-grid-height">
-            <ServicesDataGrid services={services} />
+            <ServicesDataGrid services={services} onServiceUpdatedAction={refresh} />
           </Box>
         </Box>
       </CustomTabPanel>

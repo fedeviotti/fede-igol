@@ -5,28 +5,45 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid';
 import { useRouter } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { formatItalianDate } from '@/app/utils/utils';
+import { EditServiceModal } from './EditServiceModal';
 
 type Props = {
   services?: Service[];
   isLoading?: boolean;
+  onServiceUpdatedAction?: () => void;
 };
 
-export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => {
+export const ServicesDataGrid: FC<Props> = ({
+  services,
+  isLoading = false,
+  onServiceUpdatedAction,
+}) => {
   const router = useRouter();
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const openServiceHandler = (id: GridRowId) => {
     router.push(`/maintenance/home/service/${id}`);
   };
 
   const onEditServiceHandler = (id: GridRowId) => {
-    console.log(`Edit service with ID: ${id}`);
+    const service = services?.find((s) => s.id === id);
+    if (service) {
+      setSelectedService(service);
+      setEditModalOpen(true);
+    }
   };
 
   const onDeleteServiceHandler = (id: GridRowId) => {
     console.log(`Delete service with ID: ${id}`);
+  };
+
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+    setSelectedService(null);
   };
 
   const columns: GridColDef[] = [
@@ -91,5 +108,15 @@ export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => 
     },
   ];
 
-  return <DataGrid rows={services} columns={columns} loading={isLoading} />;
+  return (
+    <>
+      <DataGrid rows={services} columns={columns} loading={isLoading} />
+      <EditServiceModal
+        service={selectedService}
+        open={editModalOpen}
+        onClose={handleEditModalClose}
+        onServiceUpdatedAction={onServiceUpdatedAction}
+      />
+    </>
+  );
 };

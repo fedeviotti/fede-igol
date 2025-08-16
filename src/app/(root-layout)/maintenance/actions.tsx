@@ -148,15 +148,40 @@ export async function insertService(service: InsertServiceProps) {
       price: service.price,
       createdAt: new Date().toLocaleDateString(),
       deletedAt: null,
-      executedAt: service.executedAt
-        ? parse(service.executedAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
-        : null,
       expiredAt: service.expiredAt
         ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
+        : null,
+      executedAt: service.executedAt
+        ? parse(service.executedAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
         : null,
       vehicleId: service.vehicleId,
       garageId: service.garageId,
     });
+  });
+
+  revalidatePath('/maintenance/home');
+}
+
+type UpdateServiceProps = Pick<Service, 'id' | 'name' | 'price' | 'expiredAt' | 'executedAt'> & {
+  garageId: number;
+};
+
+export async function updateService(service: UpdateServiceProps) {
+  await fetchWithDrizzle(async (db) => {
+    return db
+      .update(schema.servicesTable)
+      .set({
+        name: service.name,
+        price: service.price,
+        expiredAt: service.expiredAt
+          ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
+          : null,
+        executedAt: service.executedAt
+          ? parse(service.executedAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
+          : null,
+        garageId: service.garageId,
+      })
+      .where(eq(schema.servicesTable.id, service.id));
   });
 
   revalidatePath('/maintenance/home');

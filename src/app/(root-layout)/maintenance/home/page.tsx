@@ -1,4 +1,4 @@
-import TabsMaintenance from '@components/TabsMaintenance';
+import { TabsMaintenanceWrapper } from '@components/TabsMaintenanceWrapper';
 import { LinearProgress } from '@mui/material';
 import { getGarages, getServices, getVehicles } from '@/app/(root-layout)/maintenance/actions';
 import { Service } from '@/app/types';
@@ -12,5 +12,11 @@ export default async function VehiclesPage() {
     return <LinearProgress />;
   }
 
-  return <TabsMaintenance vehicles={vehicles} garages={garages} services={services as Service[]} />;
+  return (
+    <TabsMaintenanceWrapper
+      initialVehicles={vehicles}
+      initialGarages={garages}
+      initialServices={services as Service[]}
+    />
+  );
 }

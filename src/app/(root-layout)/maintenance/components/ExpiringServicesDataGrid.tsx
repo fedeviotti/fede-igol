@@ -10,6 +10,7 @@ import { formatItalianDate } from '@/app/utils/utils';
 type Props = {
   services?: Service[];
   isLoading?: boolean;
+  onServiceUpdatedAction?: () => void;
 };
 
 const checkExpirationStatus = (dateString: string): 'expired' | 'expiringSoon' | 'valid' => {
