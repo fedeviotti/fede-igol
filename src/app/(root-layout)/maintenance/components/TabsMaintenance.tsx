@@ -103,7 +103,7 @@ export default function TabsMaintenance({
       <CustomTabPanel value={value} index={2}>
         <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
-            <AddVehicleButtonModal />
+            <AddVehicleButtonModal onVehicleAddedAction={refreshVehicles} />
           </Box>
           <Box className="tabs-maintenance-data-grid-height">
             <VehiclesDatGrid onVehicleUpdatedAction={refreshVehicles} />
@@ -113,7 +113,7 @@ export default function TabsMaintenance({
       <CustomTabPanel value={value} index={3}>
         <Box className="flex flex-col gap-2 pt-2 h-full">
           <Box className="flex gap-4">
-            <AddGarageButtonModal />
+            <AddGarageButtonModal onGarageAddedAction={refreshGarages} />
           </Box>
           <Box className="tabs-maintenance-data-grid-height">
             <GaragesDatGrid garages={garages} onGarageUpdatedAction={refreshGarages} />

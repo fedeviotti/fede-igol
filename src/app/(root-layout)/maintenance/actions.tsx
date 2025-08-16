@@ -3,7 +3,6 @@
 import { parse } from 'date-fns';
 import { and, asc, eq, isNull } from 'drizzle-orm';
 import { usersSync as users } from 'drizzle-orm/neon';
-import { revalidatePath } from 'next/cache';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { fetchWithDrizzle } from '@/db/db';
 import * as schema from '@/db/schema';
@@ -20,8 +19,6 @@ export async function insertVehicle(vehicle: InsertVehicleProps) {
       userId,
     });
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 export async function getVehicles() {
@@ -56,8 +53,6 @@ export async function insertGarage(vehicle: InsertGarageProps) {
       userId,
     });
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 export async function getGarages() {
@@ -160,8 +155,6 @@ export async function insertService(service: InsertServiceProps) {
       garageId: service.garageId,
     });
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 type UpdateServiceProps = Pick<Service, 'id' | 'name' | 'price' | 'expiredAt' | 'executedAt'> & {
@@ -185,8 +178,6 @@ export async function updateService(service: UpdateServiceProps) {
       })
       .where(eq(schema.servicesTable.id, service.id));
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 export async function deleteService(serviceId: number) {
@@ -198,8 +189,6 @@ export async function deleteService(serviceId: number) {
       })
       .where(eq(schema.servicesTable.id, serviceId));
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 export async function deleteVehicle(vehicleId: number) {
@@ -211,8 +200,6 @@ export async function deleteVehicle(vehicleId: number) {
       })
       .where(eq(schema.vehiclesTable.id, vehicleId));
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 type UpdateVehicleProps = Pick<Vehicle, 'id' | 'name' | 'type'>;
@@ -227,8 +214,6 @@ export async function updateVehicle(vehicle: UpdateVehicleProps) {
       })
       .where(eq(schema.vehiclesTable.id, vehicle.id));
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 type UpdateGarageProps = Pick<Garage, 'id' | 'name'>;
@@ -242,8 +227,6 @@ export async function updateGarage(garage: UpdateGarageProps) {
       })
       .where(eq(schema.garagesTable.id, garage.id));
   });
-
-  revalidatePath('/maintenance/home');
 }
 
 export async function deleteGarage(garageId: number) {
@@ -255,6 +238,4 @@ export async function deleteGarage(garageId: number) {
       })
       .where(eq(schema.garagesTable.id, garageId));
   });
-
-  revalidatePath('/maintenance/home');
 }

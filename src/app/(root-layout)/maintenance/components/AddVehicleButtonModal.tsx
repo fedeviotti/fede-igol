@@ -16,7 +16,11 @@ const modalStyle = {
   p: 4,
 };
 
-export const AddVehicleButtonModal: FC = () => {
+type Props = {
+  onVehicleAddedAction?: () => void;
+};
+
+export const AddVehicleButtonModal: FC<Props> = ({ onVehicleAddedAction }) => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -29,11 +33,12 @@ export const AddVehicleButtonModal: FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    //console.log('Form data:', formData);
     await insertVehicle({
       name: formData.name,
       type: formData.type,
     });
+    setFormData({ name: '', type: '' });
+    onVehicleAddedAction?.();
     setOpen(false);
   };
 

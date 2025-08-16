@@ -16,7 +16,11 @@ const modalStyle = {
   p: 4,
 };
 
-export const AddGarageButtonModal: FC = () => {
+type Props = {
+  onGarageAddedAction?: () => void;
+};
+
+export const AddGarageButtonModal: FC<Props> = ({ onGarageAddedAction }) => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -31,6 +35,8 @@ export const AddGarageButtonModal: FC = () => {
     await insertGarage({
       name: formData.name,
     });
+    setFormData({ name: '' });
+    onGarageAddedAction?.();
     setOpen(false);
   };
 
