@@ -83,6 +83,7 @@ export async function getServices() {
         name: schema.servicesTable.name,
         createdAt: schema.servicesTable.createdAt,
         price: schema.servicesTable.price,
+        executedAt: schema.servicesTable.executedAt,
         expiredAt: schema.servicesTable.expiredAt,
         vehicle: {
           id: schema.vehiclesTable.id,
@@ -113,6 +114,7 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
         name: schema.servicesTable.name,
         createdAt: schema.servicesTable.createdAt,
         price: schema.servicesTable.price,
+        executedAt: schema.servicesTable.executedAt,
         expiredAt: schema.servicesTable.expiredAt,
         vehicle: {
           id: schema.vehiclesTable.id,
@@ -134,7 +136,7 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
   });
 }
 
-type InsertServiceProps = Pick<Service, 'name' | 'price' | 'expiredAt'> & {
+type InsertServiceProps = Pick<Service, 'name' | 'price' | 'expiredAt' | 'executedAt'> & {
   vehicleId: number;
   garageId: number;
 };
@@ -146,6 +148,9 @@ export async function insertService(service: InsertServiceProps) {
       price: service.price,
       createdAt: new Date().toLocaleDateString(),
       deletedAt: null,
+      executedAt: service.executedAt
+        ? parse(service.executedAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
+        : null,
       expiredAt: service.expiredAt
         ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
         : null,

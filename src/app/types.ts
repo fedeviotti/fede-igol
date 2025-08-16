@@ -26,6 +26,7 @@ export type Service = {
   price: string;
   createdAt: string;
   deletedAt?: string;
+  executedAt?: string;
   expiredAt?: string;
   vehicle: Vehicle | null;
   garage: Garage | null;

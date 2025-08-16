@@ -56,8 +56,8 @@ export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => 
       },
     },
     {
-      field: 'createdAt',
-      headerName: 'Data creazione',
+      field: 'executedAt',
+      headerName: 'Data esecuzione',
       width: 150,
       valueGetter: formatItalianDate,
     },

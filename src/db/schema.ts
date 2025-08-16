@@ -23,6 +23,7 @@ export const servicesTable = pgTable('services', {
   price: numeric('price', { precision: 10, scale: 2 }).notNull(),
   createdAt: date().notNull(),
   deletedAt: date(),
+  executedAt: date(),
   expiredAt: date(),
   vehicleId: integer().notNull(),
   garageId: integer().notNull(),

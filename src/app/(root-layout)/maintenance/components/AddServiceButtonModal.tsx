@@ -29,6 +29,7 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
   const [formData, setFormData] = useState({
     name: '',
     price: '',
+    executedAt: '',
     expiredAt: '',
     selectedVehicleId: vehicleId ? Number(vehicleId) : '',
     garageId: '',
@@ -44,6 +45,7 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
     await insertService({
       name: formData.name,
       price: formData.price,
+      executedAt: formData.executedAt,
       expiredAt: formData.expiredAt,
       vehicleId: formData.selectedVehicleId ? Number(formData.selectedVehicleId) : 0,
       garageId: Number(formData.garageId),
@@ -51,6 +53,7 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
     setFormData({
       name: '',
       price: '',
+      executedAt: '',
       expiredAt: '',
       selectedVehicleId: vehicleId ? Number(vehicleId) : '',
       garageId: '',
@@ -118,6 +121,18 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
               value={formData.price}
               onChange={handleChange('price')}
               required
+              fullWidth
+            />
+            <TextField
+              label="Executed At"
+              type="date"
+              value={formData.executedAt}
+              onChange={handleChange('executedAt')}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }}
               fullWidth
             />
             <TextField

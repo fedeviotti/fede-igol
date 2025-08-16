@@ -72,8 +72,8 @@ export const ExpiringServicesDataGrid: FC<Props> = ({ services, isLoading = fals
       },
     },
     {
-      field: 'createdAt',
-      headerName: 'Data creazione',
+      field: 'executedAt',
+      headerName: 'Data esecuzione',
       width: 150,
       valueGetter: formatItalianDate,
     },
