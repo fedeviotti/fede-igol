@@ -1,4 +1,4 @@
-import { date, integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { date, integer, numeric, pgTable, varchar } from 'drizzle-orm/pg-core';
 
 export const vehiclesTable = pgTable('vehicles', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -20,7 +20,7 @@ export const garagesTable = pgTable('garages', {
 export const servicesTable = pgTable('services', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
-  price: integer().notNull(),
+  price: numeric('price', { precision: 10, scale: 2 }).notNull(),
   createdAt: date().notNull(),
   deletedAt: date(),
   expiredAt: date(),
