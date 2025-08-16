@@ -23,7 +23,7 @@ export type Garage = {
 export type Service = {
   id: number;
   name: string;
-  price: number;
+  price: string;
   createdAt: string;
   deletedAt?: string;
   expiredAt?: string;
