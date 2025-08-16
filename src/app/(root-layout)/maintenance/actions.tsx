@@ -1,7 +1,7 @@
 'use server';
 
 import { parse } from 'date-fns';
-import { asc, eq } from 'drizzle-orm';
+import { and, asc, eq, isNull } from 'drizzle-orm';
 import { usersSync as users } from 'drizzle-orm/neon';
 import { revalidatePath } from 'next/cache';
 import { Garage, Service, Vehicle } from '@/app/types';
@@ -40,7 +40,7 @@ export async function getVehicles() {
       })
       .from(schema.vehiclesTable)
       .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
-      .where(eq(schema.vehiclesTable.userId, userId))
+      .where(and(eq(schema.vehiclesTable.userId, userId), isNull(schema.vehiclesTable.deletedAt)))
       .orderBy(asc(schema.vehiclesTable.createdAt));
   });
 }
@@ -70,7 +70,7 @@ export async function getGarages() {
       })
       .from(schema.garagesTable)
       .leftJoin(users, eq(schema.garagesTable.userId, users.id))
-      .where(eq(schema.garagesTable.userId, userId))
+      .where(and(eq(schema.garagesTable.userId, userId), isNull(schema.garagesTable.deletedAt)))
       .orderBy(asc(schema.garagesTable.createdAt));
   });
 }
@@ -101,7 +101,7 @@ export async function getServices() {
       .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
       .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
       .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
-      .where(eq(users.id, userId))
+      .where(and(eq(users.id, userId), isNull(schema.servicesTable.deletedAt)))
       .orderBy(asc(schema.servicesTable.expiredAt));
   });
 }
@@ -131,7 +131,9 @@ export async function getServicesByVehicleId({ vehicleId }: { vehicleId: number 
       .from(schema.servicesTable)
       .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
       .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
-      .where(eq(schema.servicesTable.vehicleId, vehicleId))
+      .where(
+        and(eq(schema.servicesTable.vehicleId, vehicleId), isNull(schema.servicesTable.deletedAt))
+      )
       .orderBy(asc(schema.servicesTable.expiredAt));
   });
 }
@@ -182,6 +184,19 @@ export async function updateService(service: UpdateServiceProps) {
         garageId: service.garageId,
       })
       .where(eq(schema.servicesTable.id, service.id));
+  });
+
+  revalidatePath('/maintenance/home');
+}
+
+export async function deleteService(serviceId: number) {
+  await fetchWithDrizzle(async (db) => {
+    return db
+      .update(schema.servicesTable)
+      .set({
+        deletedAt: new Date().toLocaleDateString(),
+      })
+      .where(eq(schema.servicesTable.id, serviceId));
   });
 
   revalidatePath('/maintenance/home');

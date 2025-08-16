@@ -2,10 +2,19 @@
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid';
 import { FC, useState } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { formatItalianDate } from '@/app/utils/utils';
+import { deleteService } from '../actions';
 import { EditServiceModal } from './EditServiceModal';
 
 type Props = {
@@ -21,6 +30,8 @@ export const ServicesDataGrid: FC<Props> = ({
 }) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [serviceToDelete, setServiceToDelete] = useState<number | null>(null);
 
   const onEditServiceHandler = (id: GridRowId) => {
     const service = services?.find((s) => s.id === id);
@@ -31,7 +42,28 @@ export const ServicesDataGrid: FC<Props> = ({
   };
 
   const onDeleteServiceHandler = (id: GridRowId) => {
-    console.log(`Delete service with ID: ${id}`);
+    setServiceToDelete(Number(id));
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (serviceToDelete) {
+      try {
+        await deleteService(serviceToDelete);
+        if (onServiceUpdatedAction) {
+          onServiceUpdatedAction();
+        }
+      } catch (error) {
+        console.error('Error deleting service:', error);
+      }
+    }
+    setDeleteDialogOpen(false);
+    setServiceToDelete(null);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setServiceToDelete(null);
   };
 
   const handleEditModalClose = () => {
@@ -102,6 +134,27 @@ export const ServicesDataGrid: FC<Props> = ({
         onClose={handleEditModalClose}
         onServiceUpdatedAction={onServiceUpdatedAction}
       />
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteCancel}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">Conferma eliminazione</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="delete-dialog-description">
+            Sei sicuro di voler eliminare questo servizio? Questa azione è irreversibile.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} color="primary">
+            Annulla
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+            Elimina
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
