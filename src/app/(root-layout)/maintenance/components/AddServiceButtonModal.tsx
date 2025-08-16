@@ -41,7 +41,6 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log('Form data:', formData);
     await insertService({
       name: formData.name,
       price: formData.price,
