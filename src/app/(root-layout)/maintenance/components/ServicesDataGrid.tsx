@@ -7,7 +7,7 @@ import { FC, useState } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { formatItalianDate } from '@/app/utils/utils';
 import { deleteService } from '../actions';
-import { DialogDeleteService } from './DialogDeleteService';
+import { DialogDelete } from './DialogDelete';
 import { EditServiceModal } from './EditServiceModal';
 
 type Props = {
@@ -43,9 +43,7 @@ export const ServicesDataGrid: FC<Props> = ({
     if (serviceToDelete) {
       try {
         await deleteService(serviceToDelete);
-        if (onServiceUpdatedAction) {
-          onServiceUpdatedAction();
-        }
+        onServiceUpdatedAction?.();
       } catch (error) {
         console.error('Error deleting service:', error);
       }
@@ -127,10 +125,13 @@ export const ServicesDataGrid: FC<Props> = ({
         onClose={handleEditModalClose}
         onServiceUpdatedAction={onServiceUpdatedAction}
       />
-      <DialogDeleteService
-        deleteDialogOpen={deleteDialogOpen}
+      <DialogDelete
+        open={deleteDialogOpen}
         handleDeleteCancel={handleDeleteCancel}
         handleDeleteConfirm={handleDeleteConfirm}
+        dialogContextText={
+          'Sei sicuro di voler eliminare questo servizio? Questa azione è irreversibile.'
+        }
       />
     </>
   );

@@ -201,3 +201,16 @@ export async function deleteService(serviceId: number) {
 
   revalidatePath('/maintenance/home');
 }
+
+export async function deleteVehicle(vehicleId: number) {
+  await fetchWithDrizzle(async (db) => {
+    return db
+      .update(schema.vehiclesTable)
+      .set({
+        deletedAt: new Date().toLocaleDateString(),
+      })
+      .where(eq(schema.vehiclesTable.id, vehicleId));
+  });
+
+  revalidatePath('/maintenance/home');
+}

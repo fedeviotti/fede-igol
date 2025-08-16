@@ -14,14 +14,22 @@ import {
   GridRowId,
 } from '@mui/x-data-grid';
 import { useRouter } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { User } from '@/app/types';
 import { formatItalianDate } from '@/app/utils/utils';
 import { useVehicles } from '@/store/store';
+import { deleteVehicle } from '../actions';
+import { DialogDelete } from './DialogDelete';
 
-export const VehiclesDatGrid: FC = () => {
+type Props = {
+  onVehicleUpdatedAction?: () => void;
+};
+
+export const VehiclesDatGrid: FC<Props> = ({ onVehicleUpdatedAction }) => {
   const vehicles = useVehicles();
   const router = useRouter();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [vehicleToDelete, setVehicleToDelete] = useState<number | null>(null);
 
   const openVehicleHandler = (id: GridRowId) => {
     router.push(`/maintenance/home/vehicle/${id}`);
@@ -32,7 +40,26 @@ export const VehiclesDatGrid: FC = () => {
   };
 
   const onDeleteVehicleHandler = (id: GridRowId) => {
-    console.log(`Delete vehicle with ID: ${id}`);
+    setVehicleToDelete(Number(id));
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (vehicleToDelete) {
+      try {
+        await deleteVehicle(vehicleToDelete);
+        onVehicleUpdatedAction?.();
+      } catch (error) {
+        console.error('Error deleting vehicle:', error);
+      }
+    }
+    setDeleteDialogOpen(false);
+    setVehicleToDelete(null);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setVehicleToDelete(null);
   };
 
   const columns: GridColDef[] = [
@@ -71,7 +98,7 @@ export const VehiclesDatGrid: FC = () => {
     {
       field: 'actions',
       type: 'actions',
-      width: 80,
+      width: 120,
       getActions: (params) => [
         <GridActionsCellItem
           key="open"
@@ -84,18 +111,28 @@ export const VehiclesDatGrid: FC = () => {
           icon={<EditOutlinedIcon />}
           label="Modifica"
           onClick={() => onEditVehicleHandler(params.id)}
-          showInMenu
         />,
         <GridActionsCellItem
           key="delete"
           icon={<DeleteOutlineOutlinedIcon />}
           label="Elimina"
           onClick={() => onDeleteVehicleHandler(params.id)}
-          showInMenu
         />,
       ],
     },
   ];
 
-  return <DataGrid rows={vehicles} columns={columns} />;
+  return (
+    <>
+      <DataGrid rows={vehicles} columns={columns} />
+      <DialogDelete
+        open={deleteDialogOpen}
+        handleDeleteCancel={handleDeleteCancel}
+        handleDeleteConfirm={handleDeleteConfirm}
+        dialogContextText={
+          'Sei sicuro di voler eliminare questo veicolo? Questa azione è irreversibile.'
+        }
+      />
+    </>
+  );
 };
