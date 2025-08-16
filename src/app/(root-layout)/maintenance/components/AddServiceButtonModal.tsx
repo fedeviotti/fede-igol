@@ -43,10 +43,17 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
     console.log('Form data:', formData);
     await insertService({
       name: formData.name,
-      price: parseFloat(formData.price),
+      price: formData.price,
       expiredAt: formData.expiredAt,
       vehicleId: formData.selectedVehicleId ? Number(formData.selectedVehicleId) : 0,
       garageId: Number(formData.garageId),
+    });
+    setFormData({
+      name: '',
+      price: '',
+      expiredAt: '',
+      selectedVehicleId: vehicleId ? Number(vehicleId) : '',
+      garageId: '',
     });
     onServiceAddedAction?.();
     setOpen(false);

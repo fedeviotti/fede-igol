@@ -48,6 +48,14 @@ export const ServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => 
       },
     },
     {
+      field: 'price',
+      headerName: 'Prezzo',
+      width: 100,
+      valueFormatter: (value) => {
+        return `€ ${value}`;
+      },
+    },
+    {
       field: 'createdAt',
       headerName: 'Data creazione',
       width: 150,
