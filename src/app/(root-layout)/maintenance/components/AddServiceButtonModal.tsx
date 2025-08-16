@@ -58,7 +58,7 @@ export const AddServiceButtonModal: FC<Props> = ({ vehicleId, onServiceAddedActi
       selectedVehicleId: vehicleId ? Number(vehicleId) : '',
       garageId: '',
     });
-    onServiceAddedAction?.();
+    //onServiceAddedAction?.();
     setOpen(false);
   };
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Vehicle } from '@/app/types';
-import { updateVehicle } from '../actions';
+import { updateGarage } from '@/app/(root-layout)/maintenance/actions';
+import { Garage } from '@/app/types';
 
 const modalStyle = {
   position: 'absolute' as const,
@@ -18,26 +18,24 @@ const modalStyle = {
 };
 
 type Props = {
-  vehicle: Vehicle | null;
+  garage: Garage | null;
   open: boolean;
   onClose: () => void;
-  onVehicleUpdatedAction?: () => void;
+  onGarageUpdatedAction?: () => void;
 };
 
-export const EditVehicleModal: FC<Props> = ({ vehicle, open, onClose, onVehicleUpdatedAction }) => {
+export const EditGarageModal: FC<Props> = ({ garage, open, onClose, onGarageUpdatedAction }) => {
   const [formData, setFormData] = useState({
     name: '',
-    type: '',
   });
 
   useEffect(() => {
-    if (vehicle) {
+    if (garage) {
       setFormData({
-        name: vehicle.name,
-        type: vehicle.type,
+        name: garage.name,
       });
     }
-  }, [vehicle]);
+  }, [garage]);
 
   const handleChange = (field: keyof typeof formData) => (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [field]: event.target.value });
@@ -45,32 +43,25 @@ export const EditVehicleModal: FC<Props> = ({ vehicle, open, onClose, onVehicleU
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (vehicle) {
-      await updateVehicle({
-        id: vehicle.id,
-        name: formData.name,
-        type: formData.type,
-      });
-      if (onVehicleUpdatedAction) {
-        onVehicleUpdatedAction();
-      }
-      onClose();
-    }
-  };
+    if (!garage) return;
 
-  const handleClose = () => {
-    setFormData({
-      name: '',
-      type: '',
+    console.log('Edit garage form data:', formData);
+    await updateGarage({
+      id: garage.id,
+      name: formData.name,
     });
+
+    onGarageUpdatedAction?.();
     onClose();
   };
 
+  if (!garage) return null;
+
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onClose={onClose}>
       <Box sx={modalStyle}>
         <Typography variant="h6" mb={2}>
-          Modifica veicolo
+          Modifica officina
         </Typography>
         <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
           <TextField
@@ -80,20 +71,8 @@ export const EditVehicleModal: FC<Props> = ({ vehicle, open, onClose, onVehicleU
             required
             fullWidth
           />
-          <TextField
-            label="Tipo"
-            value={formData.type}
-            onChange={handleChange('type')}
-            select
-            required
-            fullWidth
-          >
-            <MenuItem value="car">Macchina</MenuItem>
-            <MenuItem value="motorbike">Motocicletta</MenuItem>
-            <MenuItem value="bike">Bicicletta</MenuItem>
-          </TextField>
           <Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
-            <Button onClick={handleClose}>Annulla</Button>
+            <Button onClick={onClose}>Annulla</Button>
             <Button type="submit" variant="contained">
               Salva modifiche
             </Button>

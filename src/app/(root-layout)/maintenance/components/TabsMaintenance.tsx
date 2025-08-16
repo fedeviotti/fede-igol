@@ -47,6 +47,7 @@ type Props = {
   services: Service[];
   onServiceUpdatedAction?: () => void;
   onVehicleUpdatedAction?: () => void;
+  onGarageUpdatedAction?: () => void;
 };
 
 export default function TabsMaintenance({
@@ -55,6 +56,7 @@ export default function TabsMaintenance({
   services,
   onServiceUpdatedAction: refresh,
   onVehicleUpdatedAction: refreshVehicles,
+  onGarageUpdatedAction: refreshGarages,
 }: Props) {
   const { setVehicles, setGarages } = useStoreActions();
   const [value, setValue] = useState(2);
@@ -114,7 +116,7 @@ export default function TabsMaintenance({
             <AddGarageButtonModal />
           </Box>
           <Box className="tabs-maintenance-data-grid-height">
-            <GaragesDatGrid garages={garages} />
+            <GaragesDatGrid garages={garages} onGarageUpdatedAction={refreshGarages} />
           </Box>
         </Box>
       </CustomTabPanel>

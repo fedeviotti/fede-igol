@@ -230,3 +230,31 @@ export async function updateVehicle(vehicle: UpdateVehicleProps) {
 
   revalidatePath('/maintenance/home');
 }
+
+type UpdateGarageProps = Pick<Garage, 'id' | 'name'>;
+
+export async function updateGarage(garage: UpdateGarageProps) {
+  await fetchWithDrizzle(async (db) => {
+    return db
+      .update(schema.garagesTable)
+      .set({
+        name: garage.name,
+      })
+      .where(eq(schema.garagesTable.id, garage.id));
+  });
+
+  revalidatePath('/maintenance/home');
+}
+
+export async function deleteGarage(garageId: number) {
+  await fetchWithDrizzle(async (db) => {
+    return db
+      .update(schema.garagesTable)
+      .set({
+        deletedAt: new Date().toLocaleDateString(),
+      })
+      .where(eq(schema.garagesTable.id, garageId));
+  });
+
+  revalidatePath('/maintenance/home');
+}

@@ -28,7 +28,6 @@ export const AddGarageButtonModal: FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    //console.log('Form data:', formData);
     await insertGarage({
       name: formData.name,
     });

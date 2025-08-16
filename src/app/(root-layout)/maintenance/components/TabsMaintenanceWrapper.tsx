@@ -16,7 +16,7 @@ export const TabsMaintenanceWrapper: FC<Props> = ({
   initialServices,
 }) => {
   const [vehicles, setVehicles] = useState<Vehicle[]>(initialVehicles);
-  const [garages] = useState<Garage[]>(initialGarages);
+  const [garages, setGarages] = useState<Garage[]>(initialGarages);
   const [services, setServices] = useState<Service[]>(initialServices);
 
   const refreshServices = useCallback(async () => {
@@ -39,6 +39,16 @@ export const TabsMaintenanceWrapper: FC<Props> = ({
     }
   }, []);
 
+  const refreshGarages = useCallback(async () => {
+    try {
+      const response = await fetch('/api/garages');
+      const data = await response.json();
+      setGarages(data);
+    } catch (error) {
+      console.error('Error refreshing garages:', error);
+    }
+  }, []);
+
   return (
     <TabsMaintenance
       vehicles={vehicles}
@@ -46,6 +56,7 @@ export const TabsMaintenanceWrapper: FC<Props> = ({
       services={services}
       onServiceUpdatedAction={refreshServices}
       onVehicleUpdatedAction={refreshVehicles}
+      onGarageUpdatedAction={refreshGarages}
     />
   );
 };
