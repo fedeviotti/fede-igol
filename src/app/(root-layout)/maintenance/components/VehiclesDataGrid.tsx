@@ -15,11 +15,12 @@ import {
 } from '@mui/x-data-grid';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
-import { User } from '@/app/types';
+import { User, Vehicle } from '@/app/types';
 import { formatItalianDate } from '@/app/utils/utils';
 import { useVehicles } from '@/store/store';
 import { deleteVehicle } from '../actions';
 import { DialogDelete } from './DialogDelete';
+import { EditVehicleModal } from './EditVehicleModal';
 
 type Props = {
   onVehicleUpdatedAction?: () => void;
@@ -28,6 +29,8 @@ type Props = {
 export const VehiclesDatGrid: FC<Props> = ({ onVehicleUpdatedAction }) => {
   const vehicles = useVehicles();
   const router = useRouter();
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [vehicleToDelete, setVehicleToDelete] = useState<number | null>(null);
 
@@ -36,7 +39,11 @@ export const VehiclesDatGrid: FC<Props> = ({ onVehicleUpdatedAction }) => {
   };
 
   const onEditVehicleHandler = (id: GridRowId) => {
-    console.log(`Edit vehicle with ID: ${id}`);
+    const vehicle = vehicles?.find((v) => v.id === id);
+    if (vehicle) {
+      setSelectedVehicle(vehicle);
+      setEditModalOpen(true);
+    }
   };
 
   const onDeleteVehicleHandler = (id: GridRowId) => {
@@ -60,6 +67,11 @@ export const VehiclesDatGrid: FC<Props> = ({ onVehicleUpdatedAction }) => {
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
     setVehicleToDelete(null);
+  };
+
+  const handleEditModalClose = () => {
+    setEditModalOpen(false);
+    setSelectedVehicle(null);
   };
 
   const columns: GridColDef[] = [
@@ -132,6 +144,12 @@ export const VehiclesDatGrid: FC<Props> = ({ onVehicleUpdatedAction }) => {
         dialogContextText={
           'Sei sicuro di voler eliminare questo veicolo? Questa azione è irreversibile.'
         }
+      />
+      <EditVehicleModal
+        open={editModalOpen}
+        onClose={handleEditModalClose}
+        vehicle={selectedVehicle}
+        onVehicleUpdatedAction={onVehicleUpdatedAction}
       />
     </>
   );

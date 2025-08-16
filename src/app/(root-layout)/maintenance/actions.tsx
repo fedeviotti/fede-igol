@@ -214,3 +214,19 @@ export async function deleteVehicle(vehicleId: number) {
 
   revalidatePath('/maintenance/home');
 }
+
+type UpdateVehicleProps = Pick<Vehicle, 'id' | 'name' | 'type'>;
+
+export async function updateVehicle(vehicle: UpdateVehicleProps) {
+  await fetchWithDrizzle(async (db) => {
+    return db
+      .update(schema.vehiclesTable)
+      .set({
+        name: vehicle.name,
+        type: vehicle.type,
+      })
+      .where(eq(schema.vehiclesTable.id, vehicle.id));
+  });
+
+  revalidatePath('/maintenance/home');
+}
