@@ -12,7 +12,6 @@ export const checkExpirationStatus = (
   dateString: string | undefined,
   format: string = 'yyyy-MM-dd'
 ): 'expired' | 'expiringSoon' | 'valid' => {
-  console.log('dateString', dateString);
   if (!dateString) return 'valid';
   const date = parse(dateString, format, new Date());
   const today = startOfDay(new Date());
