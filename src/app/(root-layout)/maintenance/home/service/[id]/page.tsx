@@ -1,15 +1,18 @@
 'use client';
 
+import DirectionsBikeOutlinedIcon from '@mui/icons-material/DirectionsBikeOutlined';
+import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
 import NavigateBeforeOutlinedIcon from '@mui/icons-material/NavigateBeforeOutlined';
-import { 
-  Box, 
-  Card, 
-  CardContent, 
-  Typography, 
-  IconButton, 
+import PedalBikeOutlinedIcon from '@mui/icons-material/PedalBikeOutlined';
+import {
+  Box,
+  Card,
+  CardContent,
   Chip,
+  CircularProgress,
   Divider,
-  CircularProgress
+  IconButton,
+  Typography,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { use, useCallback, useEffect, useState } from 'react';
@@ -28,6 +31,19 @@ export default function ServiceDetailPage({ params }: Props) {
   const [service, setService] = useState<Service | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const renderVehicleTypeIcon = (type: string) => {
+    switch (type) {
+      case 'car':
+        return <DirectionsCarFilledOutlinedIcon />;
+      case 'motorbike':
+        return <PedalBikeOutlinedIcon />;
+      case 'bike':
+        return <DirectionsBikeOutlinedIcon />;
+      default:
+        return 'Altro';
+    }
+  };
 
   const fetchService = useCallback(async () => {
     setIsLoading(true);
@@ -69,9 +85,7 @@ export default function ServiceDetailPage({ params }: Props) {
         </Box>
         <Card>
           <CardContent>
-            <Typography color="error">
-              {error || 'Servizio non trovato'}
-            </Typography>
+            <Typography color="error">{error || 'Servizio non trovato'}</Typography>
           </CardContent>
         </Card>
       </Box>
@@ -92,9 +106,9 @@ export default function ServiceDetailPage({ params }: Props) {
           <Typography variant="h6" component="h2" gutterBottom>
             {service.name}
           </Typography>
-          
+
           <Divider sx={{ my: 2 }} />
-          
+
           <Box className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Box>
               <Typography variant="subtitle2" color="text.secondary" gutterBottom>
@@ -127,15 +141,15 @@ export default function ServiceDetailPage({ params }: Props) {
               <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                 Stato
               </Typography>
-              <Chip 
+              <Chip
                 label={
-                  service.expiredAt && new Date(service.expiredAt) < new Date() 
-                    ? 'Scaduto' 
+                  service.expiredAt && new Date(service.expiredAt) < new Date()
+                    ? 'Scaduto'
                     : 'Attivo'
                 }
                 color={
-                  service.expiredAt && new Date(service.expiredAt) < new Date() 
-                    ? 'error' 
+                  service.expiredAt && new Date(service.expiredAt) < new Date()
+                    ? 'error'
                     : 'success'
                 }
                 size="small"
@@ -153,13 +167,11 @@ export default function ServiceDetailPage({ params }: Props) {
               <Card variant="outlined">
                 <CardContent sx={{ py: 2 }}>
                   {service.vehicle ? (
-                    <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <Typography variant="body1" className="font-medium">
                         {service.vehicle.name}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {service.vehicle.type}
-                      </Typography>
+                      {renderVehicleTypeIcon(service.vehicle.type)}
                     </Box>
                   ) : (
                     <Typography variant="body2" color="text.secondary">
