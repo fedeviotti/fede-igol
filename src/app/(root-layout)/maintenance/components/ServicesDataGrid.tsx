@@ -2,7 +2,9 @@
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid';
+import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
 import { formatItalianDate } from '@/app/utils/utils';
@@ -25,6 +27,11 @@ export const ServicesDataGrid: FC<Props> = ({
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [serviceToDelete, setServiceToDelete] = useState<number | null>(null);
+  const router = useRouter();
+
+  const openVehicleHandler = (id: GridRowId) => {
+    router.push(`/maintenance/home/service/${id}`);
+  };
 
   const onEditServiceHandler = (id: GridRowId) => {
     const service = services?.find((s) => s.id === id);
@@ -98,8 +105,14 @@ export const ServicesDataGrid: FC<Props> = ({
     {
       field: 'actions',
       type: 'actions',
-      width: 80,
+      width: 120,
       getActions: (params) => [
+        <GridActionsCellItem
+          key="open"
+          icon={<KeyboardArrowRightOutlinedIcon />}
+          label="Apri"
+          onClick={() => openVehicleHandler(params.id)}
+        />,
         <GridActionsCellItem
           key="edit"
           icon={<EditOutlinedIcon />}

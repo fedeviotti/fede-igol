@@ -174,6 +174,44 @@ export async function getExpiringServices() {
   });
 }
 
+export async function getServiceById({ serviceId }: { serviceId: number }) {
+  return fetchWithDrizzle(async (db, { userId }) => {
+    const result = await db
+      .select({
+        id: schema.servicesTable.id,
+        name: schema.servicesTable.name,
+        createdAt: schema.servicesTable.createdAt,
+        price: schema.servicesTable.price,
+        executedAt: schema.servicesTable.executedAt,
+        expiredAt: schema.servicesTable.expiredAt,
+        vehicle: {
+          id: schema.vehiclesTable.id,
+          name: schema.vehiclesTable.name,
+          type: schema.vehiclesTable.type,
+          createdAt: schema.vehiclesTable.createdAt,
+        },
+        garage: {
+          id: schema.garagesTable.id,
+          name: schema.garagesTable.name,
+          createdAt: schema.garagesTable.createdAt,
+        },
+      })
+      .from(schema.servicesTable)
+      .leftJoin(schema.vehiclesTable, eq(schema.vehiclesTable.id, schema.servicesTable.vehicleId))
+      .leftJoin(schema.garagesTable, eq(schema.garagesTable.id, schema.servicesTable.garageId))
+      .leftJoin(users, eq(schema.vehiclesTable.userId, users.id))
+      .where(
+        and(
+          eq(schema.servicesTable.id, serviceId),
+          eq(users.id, userId),
+          isNull(schema.servicesTable.deletedAt)
+        )
+      );
+
+    return result[0] || null;
+  });
+}
+
 type InsertServiceProps = Pick<Service, 'name' | 'price' | 'expiredAt' | 'executedAt'> & {
   vehicleId: number;
   garageId: number;
