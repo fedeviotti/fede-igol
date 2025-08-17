@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { parseISO } from 'date-fns';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getExpiringServices } from '@/app/(root-layout)/maintenance/actions';
 
@@ -34,6 +35,7 @@ export default function NotificationBell() {
   const [expiringServices, setExpiringServices] = useState<ExpiringService[]>([]);
   const [loading, setLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const router = useRouter();
 
   const open = Boolean(anchorEl);
 
@@ -84,6 +86,11 @@ export default function NotificationBell() {
     return 'info.main';
   };
 
+  const onclickHandler = (serviceId: number) => {
+    router.push(`/maintenance/home/service/${serviceId}`);
+    handleClose();
+  };
+
   if (loading) {
     return (
       <IconButton color="inherit" disabled>
@@ -129,7 +136,11 @@ export default function NotificationBell() {
               const isExpired = daysUntilExpiry < 0;
 
               return (
-                <MenuItem key={service.id} sx={{ py: 1.5 }}>
+                <MenuItem
+                  key={service.id}
+                  sx={{ py: 1.5 }}
+                  onClick={() => onclickHandler(service.id)}
+                >
                   <ListItemIcon>
                     {isExpired ? <Warning color="error" /> : <Schedule color="warning" />}
                   </ListItemIcon>
