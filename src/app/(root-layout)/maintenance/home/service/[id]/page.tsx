@@ -32,8 +32,6 @@ export default function ServiceDetailPage({ params }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  console.log('test');
-
   const renderVehicleTypeIcon = (type: string) => {
     switch (type) {
       case 'car':
