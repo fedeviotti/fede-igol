@@ -50,9 +50,6 @@ export default function ServiceDetailPage({ params }: Props) {
     setError(null);
     try {
       const res = await fetch(`/api/services/${id}`);
-      if (!res.ok) {
-        throw new Error('Servizio non trovato');
-      }
       const data = await res.json();
       setService(data);
     } catch (err) {
@@ -85,7 +82,7 @@ export default function ServiceDetailPage({ params }: Props) {
         </Box>
         <Card>
           <CardContent>
-            <Typography color="error">{error || 'Servizio non trovato'}</Typography>
+            <Typography color="error">{error}</Typography>
           </CardContent>
         </Card>
       </Box>
@@ -164,7 +161,7 @@ export default function ServiceDetailPage({ params }: Props) {
               <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                 Veicolo
               </Typography>
-              <Card variant="outlined">
+              <Card>
                 <CardContent sx={{ py: 2 }}>
                   {service.vehicle ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -186,7 +183,7 @@ export default function ServiceDetailPage({ params }: Props) {
               <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                 Garage
               </Typography>
-              <Card variant="outlined">
+              <Card>
                 <CardContent sx={{ py: 2 }}>
                   {service.garage ? (
                     <Typography variant="body1" className="font-medium">
