@@ -1,11 +1,12 @@
 'use client';
 
-import { Chip } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { addDays, isBefore, isWithinInterval, parse, startOfDay } from 'date-fns';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import { DataGrid, GridActionsCellItem, GridColDef, GridRowId } from '@mui/x-data-grid';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { Garage, Service, Vehicle } from '@/app/types';
-import { formatItalianDate } from '@/app/utils/utils';
+import { getStatusChip } from '@/app/utils/getStatusChip';
+import { checkExpirationStatus, formatItalianDate } from '@/app/utils/utils';
 
 type Props = {
   services?: Service[];
@@ -13,34 +14,13 @@ type Props = {
   onServiceUpdatedAction?: () => void;
 };
 
-const checkExpirationStatus = (dateString: string): 'expired' | 'expiringSoon' | 'valid' => {
-  const date = parse(dateString, 'dd/MM/yyyy', new Date());
-  const today = startOfDay(new Date());
-  const oneWeekFromNow = addDays(today, 7);
-
-  if (isBefore(date, today)) {
-    return 'expired';
-  }
-
-  if (isWithinInterval(date, { start: today, end: oneWeekFromNow })) {
-    return 'expiringSoon';
-  }
-
-  return 'valid'; // after next week
-};
-
-const getStatusChip = (status: 'expired' | 'expiringSoon' | 'valid') => {
-  switch (status) {
-    case 'expired':
-      return <Chip label="Scaduto" color="error" variant="outlined" />;
-    case 'expiringSoon':
-      return <Chip label="In scadenza" color="warning" variant="outlined" />;
-    case 'valid':
-      return <Chip label="Valido" color="success" variant="outlined" />;
-  }
-};
-
 export const ExpiringServicesDataGrid: FC<Props> = ({ services, isLoading = false }) => {
+  const router = useRouter();
+
+  const openServiceHandler = (id: GridRowId) => {
+    router.push(`/maintenance/home/service/${id}`);
+  };
+
   const columns: GridColDef[] = [
     {
       field: 'status',
@@ -50,8 +30,7 @@ export const ExpiringServicesDataGrid: FC<Props> = ({ services, isLoading = fals
         return formatItalianDate(row?.expiredAt) || 'N/A';
       },
       renderCell: (params) => {
-        // value is a date string, format it to 'dd/MM/yyyy'
-        const calculatedStatus = checkExpirationStatus(params.value);
+        const calculatedStatus = checkExpirationStatus(params.value, 'dd/MM/yyyy');
         return getStatusChip(calculatedStatus);
       },
     },
@@ -79,6 +58,19 @@ export const ExpiringServicesDataGrid: FC<Props> = ({ services, isLoading = fals
       valueGetter: formatItalianDate,
     },
     { field: 'expiredAt', headerName: 'Data scadenza', width: 150, valueGetter: formatItalianDate },
+    {
+      field: 'actions',
+      type: 'actions',
+      width: 120,
+      getActions: (params) => [
+        <GridActionsCellItem
+          key="open"
+          icon={<KeyboardArrowRightOutlinedIcon />}
+          label="Apri"
+          onClick={() => openServiceHandler(params.id)}
+        />,
+      ],
+    },
   ];
 
   return <DataGrid rows={services} columns={columns} loading={isLoading} />;

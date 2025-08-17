@@ -29,7 +29,7 @@ export const ServicesDataGrid: FC<Props> = ({
   const [serviceToDelete, setServiceToDelete] = useState<number | null>(null);
   const router = useRouter();
 
-  const openVehicleHandler = (id: GridRowId) => {
+  const openServiceHandler = (id: GridRowId) => {
     router.push(`/maintenance/home/service/${id}`);
   };
 
@@ -111,7 +111,7 @@ export const ServicesDataGrid: FC<Props> = ({
           key="open"
           icon={<KeyboardArrowRightOutlinedIcon />}
           label="Apri"
-          onClick={() => openVehicleHandler(params.id)}
+          onClick={() => openServiceHandler(params.id)}
         />,
         <GridActionsCellItem
           key="edit"

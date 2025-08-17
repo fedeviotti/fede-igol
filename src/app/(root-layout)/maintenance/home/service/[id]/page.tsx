@@ -17,7 +17,8 @@ import {
 import { useRouter } from 'next/navigation';
 import { use, useCallback, useEffect, useState } from 'react';
 import { Service } from '@/app/types';
-import { formatItalianDate } from '@/app/utils/utils';
+import { getStatusChip } from '@/app/utils/getStatusChip';
+import { checkExpirationStatus, formatItalianDate } from '@/app/utils/utils';
 
 type Props = {
   params: Promise<{
@@ -138,19 +139,7 @@ export default function ServiceDetailPage({ params }: Props) {
               <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                 Stato
               </Typography>
-              <Chip
-                label={
-                  service.expiredAt && new Date(service.expiredAt) < new Date()
-                    ? 'Scaduto'
-                    : 'Attivo'
-                }
-                color={
-                  service.expiredAt && new Date(service.expiredAt) < new Date()
-                    ? 'error'
-                    : 'success'
-                }
-                size="small"
-              />
+              {getStatusChip(checkExpirationStatus(service.expiredAt))}
             </Box>
           </Box>
 
