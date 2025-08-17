@@ -55,7 +55,6 @@ export const EditServiceModal: FC<Props> = ({ service, open, onClose, onServiceU
     event.preventDefault();
     if (!service) return;
 
-    console.log('Edit form data:', formData);
     await updateService({
       id: service.id,
       name: formData.name,

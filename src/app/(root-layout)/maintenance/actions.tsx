@@ -1,6 +1,6 @@
 'use server';
 
-import { parse } from 'date-fns';
+import { format } from 'date-fns';
 import { and, asc, eq, isNotNull, isNull, lte } from 'drizzle-orm';
 import { usersSync as users } from 'drizzle-orm/neon';
 import { Garage, Service, Vehicle } from '@/app/types';
@@ -14,7 +14,7 @@ export async function insertVehicle(vehicle: InsertVehicleProps) {
     return db.insert(schema.vehiclesTable).values({
       name: vehicle.name,
       type: vehicle.type,
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: format(new Date(), 'yyyy-MM-dd'),
       deletedAt: null,
       userId,
     });
@@ -48,7 +48,7 @@ export async function insertGarage(vehicle: InsertGarageProps) {
   await fetchWithDrizzle(async (db, { userId }) => {
     return db.insert(schema.garagesTable).values({
       name: vehicle.name,
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: format(new Date(), 'yyyy-MM-dd'),
       deletedAt: null,
       userId,
     });
@@ -184,14 +184,10 @@ export async function insertService(service: InsertServiceProps) {
     return db.insert(schema.servicesTable).values({
       name: service.name,
       price: service.price,
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: format(new Date(), 'yyyy-MM-dd'),
       deletedAt: null,
-      expiredAt: service.expiredAt
-        ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
-        : null,
-      executedAt: service.executedAt
-        ? parse(service.executedAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
-        : null,
+      expiredAt: service.expiredAt ? service.expiredAt : null,
+      executedAt: service.executedAt ? service.executedAt : null,
       vehicleId: service.vehicleId,
       garageId: service.garageId,
     });
@@ -209,12 +205,8 @@ export async function updateService(service: UpdateServiceProps) {
       .set({
         name: service.name,
         price: service.price,
-        expiredAt: service.expiredAt
-          ? parse(service.expiredAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
-          : null,
-        executedAt: service.executedAt
-          ? parse(service.executedAt, 'yyyy-MM-dd', new Date()).toLocaleDateString()
-          : null,
+        expiredAt: service.expiredAt ? service.expiredAt : null,
+        executedAt: service.executedAt ? service.executedAt : null,
         garageId: service.garageId,
       })
       .where(eq(schema.servicesTable.id, service.id));
@@ -226,7 +218,7 @@ export async function deleteService(serviceId: number) {
     return db
       .update(schema.servicesTable)
       .set({
-        deletedAt: new Date().toLocaleDateString(),
+        deletedAt: format(new Date(), 'yyyy-MM-dd'),
       })
       .where(eq(schema.servicesTable.id, serviceId));
   });
@@ -237,7 +229,7 @@ export async function deleteVehicle(vehicleId: number) {
     return db
       .update(schema.vehiclesTable)
       .set({
-        deletedAt: new Date().toLocaleDateString(),
+        deletedAt: format(new Date(), 'yyyy-MM-dd'),
       })
       .where(eq(schema.vehiclesTable.id, vehicleId));
   });
@@ -275,7 +267,7 @@ export async function deleteGarage(garageId: number) {
     return db
       .update(schema.garagesTable)
       .set({
-        deletedAt: new Date().toLocaleDateString(),
+        deletedAt: format(new Date(), 'yyyy-MM-dd'),
       })
       .where(eq(schema.garagesTable.id, garageId));
   });

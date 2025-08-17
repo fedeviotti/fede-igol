@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { format } from 'date-fns';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { vehiclesTable } from './db/schema';
@@ -9,7 +10,7 @@ async function main() {
   const vehicle: typeof vehiclesTable.$inferInsert = {
     name: 'Renault Captur',
     type: 'car',
-    createdAt: new Date().toLocaleDateString(),
+    createdAt: format(new Date(), 'yyyy-MM-dd'),
     deletedAt: null,
     userId: '123',
   };
