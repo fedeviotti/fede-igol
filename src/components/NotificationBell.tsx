@@ -16,6 +16,7 @@ import {
 import { parseISO } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
 import { getExpiringServices } from '@/app/(root-layout)/maintenance/actions';
 
 interface ExpiringService {
@@ -64,7 +65,7 @@ export default function NotificationBell() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -113,8 +114,8 @@ export default function NotificationBell() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          sx: { width: 400, maxHeight: 500 },
+        slotProps={{
+          paper: { sx: { width: 400, maxHeight: 500 } },
         }}
       >
         <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
