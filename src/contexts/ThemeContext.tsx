@@ -91,7 +91,6 @@ export const CustomThemeProvider: React.FC<CustomThemeProviderProps> = ({ childr
         secondary: mode === 'light' ? '#757575' : '#b3b3b3',
         disabled: mode === 'light' ? '#bdbdbd' : '#666666',
       },
-      divider: mode === 'light' ? '#e0e0e0' : '#333333',
       grey: {
         50: mode === 'light' ? '#fafafa' : '#0a0a0a',
         100: mode === 'light' ? '#f5f5f5' : '#0f0f0f',
