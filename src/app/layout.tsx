@@ -1,12 +1,11 @@
 import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { ThemeProvider } from '@mui/material/styles';
 import { StackProvider, StackTheme } from '@stackframe/stack';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import { ReactNode } from 'react';
+import { CustomThemeProvider } from '@/contexts/ThemeContext';
 import { stackServerApp } from '@/stack';
-import theme from '../theme';
 import './globals.css';
 
 const roboto = Roboto({
@@ -29,14 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.variable}>
       <AppRouterCacheProvider>
-        <ThemeProvider theme={theme}>
+        <CustomThemeProvider>
           <CssBaseline />
           <body>
             <StackProvider app={stackServerApp}>
               <StackTheme>{children}</StackTheme>
             </StackProvider>
           </body>
-        </ThemeProvider>
+        </CustomThemeProvider>
       </AppRouterCacheProvider>
     </html>
   );

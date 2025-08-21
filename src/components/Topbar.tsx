@@ -5,6 +5,7 @@ import { UserButton } from '@stackframe/stack';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import NotificationBell from './NotificationBell';
+import ThemeToggle from './ThemeToggle';
 
 export default function Topbar() {
   const router = useRouter();
@@ -39,6 +40,7 @@ export default function Topbar() {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <ThemeToggle />
           <NotificationBell />
           <UserButton />
         </Box>
