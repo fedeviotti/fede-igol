@@ -4,11 +4,13 @@ import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { UserButton } from '@stackframe/stack';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@/contexts/ThemeContext';
 import NotificationBell from './NotificationBell';
 import ThemeToggle from './ThemeToggle';
 
 export default function Topbar() {
   const router = useRouter();
+  const { mode } = useTheme();
 
   const handleLogoClick = () => {
     router.push('/'); // Redirect to home page
@@ -34,7 +36,13 @@ export default function Topbar() {
           onClick={handleLogoClick}
           sx={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
         >
-          <Image src="/eagle.png" alt="Eagle logo" width={50} height={50} priority />
+          <Image
+            src={mode === 'light' ? '/fede-igol.png' : '/fede-igol-dark.png'}
+            alt="Eagle logo"
+            width={50}
+            height={50}
+            priority
+          />
           <Typography component="h1" variant="h4" sx={{ color: 'text.primary' }}>
             FEDE-IGOL
           </Typography>
