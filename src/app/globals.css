@@ -1,23 +1,23 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 [data-radix-popper-content-wrapper] {
-    z-index: 1300 !important;
+  z-index: 1300 !important;
 }
 
 .scroll-container {
-    overflow: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
 }
 
 .scroll-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+  display: none; /* Chrome, Safari, Edge */
 }
 
 .tabs-maintenance-data-grid-height {
-    height: calc(100vh - 260px);
+  height: calc(100vh - 260px);
 }
 
 .vehicle-page-data-grid-height {
-    height: calc(100vh - 160px);
+  height: calc(100vh - 160px);
 }

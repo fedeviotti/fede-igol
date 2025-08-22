@@ -34,6 +34,11 @@ export const CustomThemeProvider: React.FC<CustomThemeProviderProps> = ({ childr
     }
   }, []);
 
+  // Set CSS custom properties for Stack components to read
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', mode);
+  }, [mode]);
+
   const toggleTheme = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     setMode(newMode);
